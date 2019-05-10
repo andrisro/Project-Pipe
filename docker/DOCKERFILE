@@ -1,5 +1,8 @@
 #FROM tomcat:9-jre8-alpine
 FROM tomcat:9-jre11
+ADD conf/tomcat-users.xml /usr/local/tomcat/conf/
+RUN bash -c 'mkdir -pv /usr/local/tomee/conf/'
+RUN echo '<?xml version="1.0" encoding="utf-8"?><tomcat-users><role rolename="tomee-admin"/><user username="tomee" password="tomee" roles="tomee-admin,manager-gui,manager-script"/></tomcat-users>' > /usr/local/tomee/conf/tomcat-users.xml
 
 WORKDIR /usr/local/tomcat/webapps
 
@@ -11,6 +14,8 @@ WORKDIR /usr/local/tomcat/webapps
 
 #Exploded Folder
 COPY war/FAPServer.war ./
+
+ADD war/angular/ ./angular
 
 #funktioniert noch nicht
 #WORKDIR /usr/local/tomcat
