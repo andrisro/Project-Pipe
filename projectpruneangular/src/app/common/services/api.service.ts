@@ -4,6 +4,7 @@ import {Observable, Subscription} from 'rxjs';
 import {encodeUriFragment, encodeUriSegment, encodeUriQuery} from '@angular/router/src/url_tree';
 import {UserLoginDTO} from "../dto/UserLoginDTO";
 import {UserRegistrationDTO} from "../dto/UserRegistrationDTO";
+import {SetStandortStandortDTO} from "../dto/SetStandortStandortDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,22 @@ import {UserRegistrationDTO} from "../dto/UserRegistrationDTO";
 export class ApiService {
   private readonly apiPath = 'http://localhost:8080/FAPServer/service/fapservice';
   private readonly loginPath = '/login';
-  private readonly registrationPath = '/addUser'
+  private readonly registrationPath = '/addUser';
+  private readonly setStandortPath = '/setStandort';
 
   constructor(private http: HttpClient) {
+  }
+
+  
+
+  public setStandort(standort: SetStandortStandortDTO) {
+    let url = this.apiPath + this.setStandortPath;
+
+    const req = this.http.put(url,standort).subscribe((res) => {
+      console.log("got response "+JSON.stringify(res));
+    }, (err) => {
+      console.error('error '+err);
+    });
   }
 
   public register(user:UserRegistrationDTO) {
