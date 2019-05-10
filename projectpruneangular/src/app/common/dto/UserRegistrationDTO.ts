@@ -1,9 +1,9 @@
-import {UserRegistrationPasswordDTO} from './UserRegistrationPasswordDTO';
+import {UserPasswordDTO} from './UserPasswordDTO';
 import {UserRegistrationEmailDTO} from './UserRegistrationEmailDTO';
 
 export class UserRegistrationDTO {
   public loginName: string;
-  public passwort: UserRegistrationPasswordDTO;
+  public passwort: UserPasswordDTO;
   public vorname: string;
   public nachname: string;
   public strasse: string;

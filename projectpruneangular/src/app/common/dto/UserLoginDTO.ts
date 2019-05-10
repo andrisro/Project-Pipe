@@ -1,9 +1,11 @@
+import {UserPasswordDTO} from './UserPasswordDTO';
+
 export class UserLoginDTO {
   public loginName: string;
-  public password: string;
+  public passwort: UserPasswordDTO;
 
   constructor() {
     this.loginName = '';
-    this.password = '';
+    this.passwort = null;
   }
 }

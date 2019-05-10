@@ -43,6 +43,10 @@ export class ApiService {
   public login(user:UserLoginDTO){
     let url = this.apiPath + this.loginPath;
 
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept','application/json');
+
     const req = this.http.post(url, user).subscribe((res) => {
       console.log("got response " + JSON.stringify(res));
 

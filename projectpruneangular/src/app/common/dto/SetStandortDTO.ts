@@ -1,11 +1,13 @@
-import {SetStandortStandortDTO} from "./SetStandortStandortDTO";
+import {SetStandortStandortDTO} from './SetStandortStandortDTO';
 
-public export SetStandortDTO {
+export class SetStandortDTO {
   public loginName: string;
   public sitzung: string;
   public standort: SetStandortStandortDTO;
 
   constructor() {
-
+    this.loginName = '';
+    this.sitzung = '';
+    this.standort = null;
   }
 }
