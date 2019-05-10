@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rest-client version="3.5"><request><http-version>1.1</http-version><http-follow-redirects/><URL>http://localhost:8080/FAPServer/service/fapservice/setStandort</URL><method>PUT</method><body><string content-type="application/json" charset="UTF-8">{"loginName":"peterl","sitzung":"ce264631-2595-4b48-a490-a79ce9dadf5e","standort":{"breitengrad":11.0,"laengengrad":10.0}}</string></body></request></rest-client>

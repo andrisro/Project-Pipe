@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rest-client version="3.5"><request><http-version>1.1</http-version><http-follow-redirects/><URL>http://api.geonames.org/postalCodeSearchJSON?postalcode=46397&amp;username=demo</URL><method>GET</method></request></rest-client>

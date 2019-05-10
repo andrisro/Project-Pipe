@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rest-client version="3.6.1"><request><http-version>1.1</http-version><http-follow-redirects/><URL>http://localhost:8080/FAPServer/service/fapservice/getStandort?login=tester&amp;session=a9893c2e-3cbc-4f97-a844-bc14319c8f69&amp;id=tester</URL><method>GET</method></request></rest-client>

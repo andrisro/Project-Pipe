@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rest-client version="3.5"><request><http-version>1.1</http-version><http-follow-redirects/><URL>http://localhost:8080/FAPServer/service/fapservice/getBenutzer?login=peterl&amp;session=06dade9a-34bf-4cbb-8325-8cfd4637a401</URL><method>GET</method></request></rest-client>
