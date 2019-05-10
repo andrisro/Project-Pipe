@@ -1,22 +1,38 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ApiService} from '../../common/services/api.service';
 import {MatInputModule} from '@angular/material/input';
 import {MatButton} from '@angular/material';
 import {UserLoginDTO} from "../../common/dto/UserLoginDTO";
 import {UserPasswordDTO} from "../../common/dto/UserPasswordDTO";
+import {SubjectService} from "../../common/services/subject.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy {
   public user: User;
   title = 'login';
+  private loginActionFinished:Subscription;
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private subjectService:SubjectService) {
     this.user = new User();
   }
+
+  ngOnInit() {
+    this.loginActionFinished = this.subjectService.loginFinishedSubject.subscribe((data) => {
+        console.log('finished!!!'+data);
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.loginActionFinished.unsubscribe();
+  }
+
+
 
   testCall() {
     console.log('login');

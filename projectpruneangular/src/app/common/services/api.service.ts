@@ -5,6 +5,8 @@ import {encodeUriFragment, encodeUriSegment, encodeUriQuery} from '@angular/rout
 import {UserLoginDTO} from "../dto/UserLoginDTO";
 import {UserRegistrationDTO} from "../dto/UserRegistrationDTO";
 import {SetStandortStandortDTO} from "../dto/SetStandortStandortDTO";
+import {SubjectService} from "./subject.service";
+import {UserSessionDTO} from "../dto/UserSessionDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,7 @@ export class ApiService {
   private readonly registrationPath = '/addUser';
   private readonly setStandortPath = '/setStandort';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private subjectService:SubjectService) {
   }
 
   
@@ -47,8 +49,13 @@ export class ApiService {
     headers.append('Content-Type', 'application/json');
     headers.append('Accept','application/json');
 
-    const req = this.http.post(url, user).subscribe((res) => {
-      console.log("got response " + JSON.stringify(res));
+    const req = this.http.post<UserSessionDTO>(url, user).subscribe((data) => {
+      console.log("got response " + JSON.stringify(data));
+
+      if(data.sessionID != null) {
+        data.userName = user.loginName;
+        this.subjectService.loginFinishedSubject.next(data);
+      }
 
     }, (err) => {
       console.error('error '+err);
