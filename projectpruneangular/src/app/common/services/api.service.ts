@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable, Subscription} from 'rxjs';
 import {encodeUriFragment, encodeUriSegment, encodeUriQuery} from '@angular/router/src/url_tree';
 import {UserLoginDTO} from "../dto/UserLoginDTO";
+import {UserRegistrationDTO} from "../dto/UserRegistrationDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,20 @@ import {UserLoginDTO} from "../dto/UserLoginDTO";
 export class ApiService {
   private readonly apiPath = 'http://localhost:8080/FAPServer/service/fapservice';
   private readonly loginPath = '/login';
-
+  private readonly registrationPath = '/addUser'
 
   constructor(private http: HttpClient) {
   }
 
-  
+  public register(user:UserRegistrationDTO) {
+    let url = this.apiPath + this.loginPath;
+
+    const req = this.http.post(url, user).subscribe((res) => {
+      console.log("got response "+JSON.stringify(res));
+    }, (err) => {
+      console.error('error '+err);
+    })
+  }
 
   public login(user:UserLoginDTO){
     let url = this.apiPath + this.loginPath;
@@ -24,7 +33,7 @@ export class ApiService {
       console.log("got response " + JSON.stringify(res));
 
     }, (err) => {
-      console.error('error');
+      console.error('error '+err);
     });
   }
 }
