@@ -7,7 +7,7 @@ import {encodeUriFragment, encodeUriSegment, encodeUriQuery} from '@angular/rout
   providedIn: 'root'
 })
 export class ApiService {
-  private readonly apiPath = 'http://localhost:8080/service/fapservice';
+  private readonly apiPath = 'http://localhost:8080/FAPServer/service/fapservice';
   private readonly loginPath = '/login';
 
 
