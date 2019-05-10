@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {ApiService} from '../../common/services/api.service';
+import {MatInputModule} from '@angular/material/input';
 
 @Component({
   selector: 'app-login',
