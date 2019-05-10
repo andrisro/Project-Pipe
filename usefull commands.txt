@@ -1,0 +1,7 @@
+FÜR Docker: 
+
+1. Docker Build ausführen
+2. Docker Run ausführen, dann läuft der Server unter localhost:8080
+
+Für Angular: 
+ng serve --open ausführen, dann wird der Server auf dem Localhost gestartet und automatisch geöffnet.
