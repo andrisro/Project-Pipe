@@ -15,6 +15,6 @@ export class LoginComponent {
 
   testCall() {
     console.log('login');
-    this.apiService.loginExampleCall();
+    this.apiService.login('tester', 'tester');
   }
 }

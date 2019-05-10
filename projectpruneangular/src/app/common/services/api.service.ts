@@ -14,12 +14,12 @@ export class ApiService {
   constructor(private http: HttpClient) {
   }
 
-  public loginExampleCall(){
+  public login(username:string, password:string){
     let url = this.apiPath + this.loginPath;
 
     const req = this.http.post(url, {
-      loginName: 'tester',
-      password: 'tester'
+      loginName: username,
+      password: password
     }).subscribe((res) => {
       console.log("got response " + JSON.stringify(res));
 
