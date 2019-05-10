@@ -19,13 +19,13 @@ export class LoginComponent {
 
   testCall() {
     console.log('login');
-    this.apiService.login('tester', 'tester');
+    // this.apiService.login('tester', 'tester');
   }
 
   login() {
     console.log('Log: ');
     console.log(JSON.stringify(this.user));
-    this.apiService.login(this.user.loginName, this.user.password);
+    this.apiService.login(this.user);
   }
 }
 
