@@ -7,6 +7,7 @@ import {UserRegistrationDTO} from "../dto/UserRegistrationDTO";
 import {SetStandortStandortDTO} from "../dto/SetStandortStandortDTO";
 import {SubjectService} from "./subject.service";
 import {UserSessionDTO} from "../dto/UserSessionDTO";
+import {UserDataDTO} from "../dto/UserDataDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -72,14 +73,23 @@ export class ApiService {
     }
   }
 
+  public getActiveSession() {
+    if(this.userSession != null) {
+      this.subjectService.loginFinishedSubject.next(this.userSession);
+    }
+  }
+
   public getUserData(session:UserSessionDTO) {
     let url = this.apiPath + this.getUserDataPath + '?login='+session.userName+'&session='+session.sessionID;
 
     let headers = new Headers();
     headers.append('Accept', 'application/json');
 
-    const req = this.http.get<any>(url).subscribe((data) => {
+    const req = this.http.get<UserDataDTO>(url).subscribe((data) => {
       console.log("got response " + JSON.stringify(data));
+
+      this.subjectService.userDataSubject.next(data);
+
     }, (err) => {
       console.error('error ' + err);
     });
