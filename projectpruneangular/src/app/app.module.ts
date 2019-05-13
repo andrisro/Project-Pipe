@@ -8,12 +8,14 @@ import {HttpClientModule} from '@angular/common/http';
 import {LoginComponent} from './components/login/login.component';
 import {MaterialModule} from './material.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HeaderComponent} from './components/header/header.component';
 import {MatNativeDateModule} from '@angular/material';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

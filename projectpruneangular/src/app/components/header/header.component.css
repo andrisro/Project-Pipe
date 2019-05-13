@@ -1,0 +1,28 @@
+.header {
+  background: #ffffff;
+//height: 150px;
+}
+
+.header-burger-container {
+  width: 80px;
+}
+
+
+.header-icon-container {
+  width: 50px;
+}
+
+.header-logo {
+  width: 150px;
+  content:url("https://cdn.pixabay.com/photo/2017/01/31/23/42/animal-2028258_640.png");
+}
+
+.header-logo-container {
+  width: 200px;
+  vertical-align: center;
+  horiz-align: center;
+}
+
+.fill-toolbar-space {
+  flex: 1 1 auto;
+}
