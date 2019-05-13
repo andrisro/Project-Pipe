@@ -16,6 +16,7 @@ export class ApiService {
   private readonly loginPath = '/login';
   private readonly registrationPath = '/addUser';
   private readonly setStandortPath = '/setStandort';
+  private userSession: UserSessionDTO;
 
   constructor(private http: HttpClient, private subjectService:SubjectService) {
   }
@@ -43,22 +44,28 @@ export class ApiService {
   }
 
   public login(user:UserLoginDTO){
-    let url = this.apiPath + this.loginPath;
+    if(this.userSession == null) {
+      let url = this.apiPath + this.loginPath;
 
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Accept','application/json');
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      headers.append('Accept', 'application/json');
 
-    const req = this.http.post<UserSessionDTO>(url, user).subscribe((data) => {
-      console.log("got response " + JSON.stringify(data));
+      const req = this.http.post<UserSessionDTO>(url, user).subscribe((data) => {
+        console.log("got response " + JSON.stringify(data));
 
-      if(data.sessionID != null) {
-        data.userName = user.loginName;
-        this.subjectService.loginFinishedSubject.next(data);
-      }
+        if (data.sessionID != null) {
+          data.userName = user.loginName;
+          this.subjectService.loginFinishedSubject.next(data);
+        }
 
-    }, (err) => {
-      console.error('error '+err);
-    });
+      }, (err) => {
+        console.error('error ' + err);
+      });
+    }
+    else {
+      this.subjectService.loginFinishedSubject.next(this.userSession);
+    }
+
   }
 }

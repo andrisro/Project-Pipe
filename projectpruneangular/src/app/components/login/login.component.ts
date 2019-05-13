@@ -6,6 +6,7 @@ import {UserLoginDTO} from "../../common/dto/UserLoginDTO";
 import {UserPasswordDTO} from "../../common/dto/UserPasswordDTO";
 import {SubjectService} from "../../common/services/subject.service";
 import {Subscription} from "rxjs";
+import {UserSessionDTO} from "../../common/dto/UserSessionDTO";
 
 @Component({
   selector: 'app-login',
@@ -15,15 +16,15 @@ import {Subscription} from "rxjs";
 export class LoginComponent implements OnInit, OnDestroy {
   public user: User;
   title = 'login';
-  private loginActionFinished:Subscription;
+  private loginActionFinished: Subscription;
 
-  constructor(private apiService: ApiService, private subjectService:SubjectService) {
+  constructor(private apiService: ApiService, private subjectService: SubjectService) {
     this.user = new User();
   }
 
   ngOnInit() {
     this.loginActionFinished = this.subjectService.loginFinishedSubject.subscribe((data) => {
-        console.log('finished!!!'+data);
+        console.log('finished!!!'+ data);
       }
     );
   }
