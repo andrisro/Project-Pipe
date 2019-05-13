@@ -15,6 +15,7 @@ import {UserSessionDTO} from "../../common/dto/UserSessionDTO";
 })
 export class LoginComponent implements OnInit, OnDestroy {
   public user: User;
+  public userSession:UserSessionDTO;
   title = 'login';
   private loginActionFinished: Subscription;
 
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loginActionFinished = this.subjectService.loginFinishedSubject.subscribe((data) => {
-        console.log('finished!!!'+ data);
+        console.log('finished!!!' + data);
+        this.userSession = data;
       }
     );
   }
