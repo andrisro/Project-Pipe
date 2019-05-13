@@ -1,8 +1,12 @@
 <h2>Profile</h2>
 
 <div *ngIf="userData!=null">
-  Vorname {{userData.benutzerliste.vorname}} <br />
-  Nachname {{userData.benutzerliste.nachname}} <br />
-  Login Name {{userData.benutzerliste.loginName}}
+  Vorname {{userData.benutzerliste[0].vorname}} <br />
+  Nachname {{userData.benutzerliste[0].nachname}} <br />
+  Login Name {{userData.benutzerliste[0].loginName}}
 
+</div>
+
+<div *ngIf="userData==null">
+  not logged in
 </div>

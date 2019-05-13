@@ -31,7 +31,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     );
 
     this.userDataActionFinished = this.subjectService.userDataSubject.subscribe((data) => {
-        console.log('got user data: '+JSON.stringify(data));
+        console.log('got user data: '+ JSON.stringify(data));
 
         this.userData = data;
     });

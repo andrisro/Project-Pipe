@@ -1,9 +1,9 @@
-import {UserListDTO} from "./UserListDTO";
+import {UserListDTO} from './UserListDTO';
 
 export class UserDataDTO {
-  benutzerliste: UserListDTO;
+  benutzerliste: UserListDTO[];
 
   constructor() {
-    this.benutzerliste = null; 
+    this.benutzerliste = null;
   }
 }

@@ -1,7 +1,7 @@
 import {UserSessionDTO} from '../dto/UserSessionDTO';
 import {Subject} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {UserDataDTO} from "../dto/UserDataDTO";
+import {UserDataDTO} from '../dto/UserDataDTO';
 
 @Injectable({
   providedIn: 'root'
