@@ -16,6 +16,7 @@ export class ApiService {
   private readonly loginPath = '/login';
   private readonly registrationPath = '/addUser';
   private readonly setStandortPath = '/setStandort';
+  private readonly getUserDataPath = '/getBenutzer';
   private userSession: UserSessionDTO;
 
   constructor(private http: HttpClient, private subjectService:SubjectService) {
@@ -55,8 +56,11 @@ export class ApiService {
         console.log("got response " + JSON.stringify(data));
 
         if (data.sessionID != null) {
-          data.userName = user.loginName;
-          this.subjectService.loginFinishedSubject.next(data);
+          this.userSession = data;
+          this.userSession.userName = user.loginName;
+
+          console.log("push "+JSON.stringify(this.userSession));
+          this.subjectService.loginFinishedSubject.next(this.userSession);
         }
 
       }, (err) => {
@@ -66,6 +70,18 @@ export class ApiService {
     else {
       this.subjectService.loginFinishedSubject.next(this.userSession);
     }
+  }
 
+  public getUserData(session:UserSessionDTO) {
+    let url = this.apiPath + this.getUserDataPath + '?login='+session.userName+'&session='+session.sessionID;
+
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+
+    const req = this.http.get<any>(url).subscribe((data) => {
+      console.log("got response " + JSON.stringify(data));
+    }, (err) => {
+      console.error('error ' + err);
+    });
   }
 }
