@@ -2,11 +2,11 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ApiService} from '../../common/services/api.service';
 import {MatInputModule} from '@angular/material/input';
 import {MatButton} from '@angular/material';
-import {UserLoginDTO} from "../../common/dto/UserLoginDTO";
-import {UserPasswordDTO} from "../../common/dto/UserPasswordDTO";
-import {SubjectService} from "../../common/services/subject.service";
-import {Subscription} from "rxjs";
-import {UserSessionDTO} from "../../common/dto/UserSessionDTO";
+import {UserLoginDTO} from '../../common/dto/UserLoginDTO';
+import {UserPasswordDTO} from '../../common/dto/UserPasswordDTO';
+import {SubjectService} from '../../common/services/subject.service';
+import {Subscription} from 'rxjs';
+import {UserSessionDTO} from '../../common/dto/UserSessionDTO';
 
 @Component({
   selector: 'app-login',
