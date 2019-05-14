@@ -8,6 +8,7 @@ import {SetStandortStandortDTO} from "../dto/SetStandortStandortDTO";
 import {SubjectService} from "./subject.service";
 import {UserSessionDTO} from "../dto/UserSessionDTO";
 import {UserDataDTO} from "../dto/UserDataDTO";
+import {SetStandortDTO} from "../dto/SetStandortDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class ApiService {
 
   
 
-  public setStandort(standort: SetStandortStandortDTO) {
+  public setStandort(standort: SetStandortDTO) {
     let url = this.apiPath + this.setStandortPath;
 
     const req = this.http.put(url,standort).subscribe((res) => {

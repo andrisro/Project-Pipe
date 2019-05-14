@@ -10,14 +10,16 @@ import {MaterialModule} from './material.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HeaderComponent} from './components/header/header.component';
 import {MatNativeDateModule} from '@angular/material';
-import {ProfileComponent} from "./components/profile/profile.component";
+import {ProfileComponent} from './components/profile/profile.component';
+import {LocationComponent} from './components/location/location.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HeaderComponent,
-    ProfileComponent
+    ProfileComponent,
+    LocationComponent
   ],
   imports: [
     BrowserModule,
