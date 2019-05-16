@@ -5,7 +5,7 @@ import {UserSessionDTO} from '../../common/dto/UserSessionDTO';
 import {ApiService} from '../../common/services/api.service';
 import {SetStandortStandortDTO} from '../../common/dto/SetStandortStandortDTO';
 import {SetStandortDTO} from '../../common/dto/SetStandortDTO';
-import { } from '@types/googlemaps';
+import {} from 'googlemaps';
 
 @Component({
   selector: 'app-location',
@@ -41,54 +41,72 @@ export class LocationComponent implements OnInit, OnDestroy {
 
     this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
 
-    console.log("add marker");
-    var marker = new google.maps.Marker({
-      position: myLatLng,
-      map: this.map,
-      title: 'Hello World!'
-    });
 
-    // this.apiService.getActiveSession();
-    //
-    // if (window.navigator && window.navigator.geolocation) {
-    //   window.navigator.geolocation.getCurrentPosition(
-    //     position => {
-    //       this.geolocationPosition = position,
-    //         console.log(position);
-    //
-    //       var setStandortDto = new SetStandortDTO();
-    //       setStandortDto.sitzung = this.userSession.sessionID;
-    //       setStandortDto.loginName = this.userSession.userName;
-    //       setStandortDto.standort = new SetStandortStandortDTO();
-    //       setStandortDto.standort.breitengrad = this.geolocationPosition.coords.latitude;
-    //       setStandortDto.standort.laengengrad = this.geolocationPosition.coords.longitude;
-    //
-    //       this.apiService.setStandort(setStandortDto);
-    //     },
-    //     error => {
-    //       switch (error.code) {
-    //         case 1:
-    //           console.log('Permission Denied');
-    //           break;
-    //         case 2:
-    //           console.log('Position Unavailable');
-    //           break;
-    //         case 3:
-    //           console.log('Timeout');
-    //           break;
-    //       }
-    //     }
-    //   );
-    // };
+    this.apiService.getActiveSession();
+
+    if (window.navigator && window.navigator.geolocation) {
+      window.navigator.geolocation.getCurrentPosition(
+        position => {
+          this.geolocationPosition = position;
+            console.log(position);
+
+          this.setPosition(position);
+
+          var setStandortDto = new SetStandortDTO();
+          setStandortDto.sitzung = this.userSession.sessionID;
+          setStandortDto.loginName = this.userSession.userName;
+          setStandortDto.standort = new SetStandortStandortDTO();
+          setStandortDto.standort.breitengrad = this.geolocationPosition.coords.latitude;
+          setStandortDto.standort.laengengrad = this.geolocationPosition.coords.longitude;
+
+          this.apiService.setStandort(setStandortDto);
+        },
+        error => {
+          switch (error.code) {
+            case 1:
+              console.log('Permission Denied');
+              break;
+            case 2:
+              console.log('Position Unavailable');
+              break;
+            case 3:
+              console.log('Timeout');
+              break;
+          }
+        }
+      );
+    }
+    ;
   }
 
   setMapType(mapTypeId: string) {
-    console.log('set map type '+mapTypeId);
+    console.log('set map type ' + mapTypeId);
     this.map.setMapTypeId(mapTypeId);
   }
 
-  setPosition(data) {
+  setPosition(data: Position) {
+    console.log("set position");
     console.log(JSON.stringify(data));
+
+    var pos = {
+      lat: data.coords.latitude,
+      lng: data.coords.longitude
+    };
+
+    console.log("add marker");
+    var marker = new google.maps.Marker({
+      position: pos,
+      map: this.map,
+      title: 'Mein Standort'
+    });
+
+    var infoWindow = new google.maps.InfoWindow;
+
+    infoWindow.setPosition(pos);
+    infoWindow.setContent('Location found.');
+    infoWindow.open(this.map);
+    this.map.setCenter(pos);
+
   }
 
   ngOnDestroy() {
