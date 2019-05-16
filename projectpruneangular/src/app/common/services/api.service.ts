@@ -9,6 +9,7 @@ import {SubjectService} from "./subject.service";
 import {UserSessionDTO} from "../dto/UserSessionDTO";
 import {UserDataDTO} from "../dto/UserDataDTO";
 import {SetStandortDTO} from "../dto/SetStandortDTO";
+import {UserCookieService} from "./usercookie.service";
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class ApiService {
   private readonly checkLoginNamePath = '/checkLoginName';
   private userSession: UserSessionDTO;
 
-  constructor(private http: HttpClient, private subjectService:SubjectService) {
+  constructor(private http: HttpClient, private subjectService:SubjectService, private userCookieService: UserCookieService) {
   }
 
   public checkLoginName(loginName:string) {
@@ -71,6 +72,8 @@ export class ApiService {
           this.userSession.userName = user.loginName;
 
           console.log("push "+JSON.stringify(this.userSession));
+
+          this.userCookieService.setSession(this.userSession);
           this.subjectService.loginFinishedSubject.next(this.userSession);
         }
 

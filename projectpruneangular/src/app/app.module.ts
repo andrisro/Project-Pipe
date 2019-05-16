@@ -12,6 +12,7 @@ import {HeaderComponent} from './components/header/header.component';
 import {MatNativeDateModule} from '@angular/material';
 import {ProfileComponent} from './components/profile/profile.component';
 import {LocationComponent} from './components/location/location.component';
+import {CookieService} from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,9 @@ import {LocationComponent} from './components/location/location.component';
     MaterialModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
