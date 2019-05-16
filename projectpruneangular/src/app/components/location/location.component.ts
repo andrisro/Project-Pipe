@@ -6,6 +6,7 @@ import {ApiService} from '../../common/services/api.service';
 import {SetStandortStandortDTO} from '../../common/dto/SetStandortStandortDTO';
 import {SetStandortDTO} from '../../common/dto/SetStandortDTO';
 import {} from 'googlemaps';
+import {UserCookieService} from "../../common/services/usercookie.service";
 
 @Component({
   selector: 'app-location',
@@ -21,7 +22,7 @@ export class LocationComponent implements OnInit, OnDestroy {
   map: google.maps.Map;
 
 
-  constructor(private subjectService: SubjectService, private apiService: ApiService) {
+  constructor(private subjectService: SubjectService, private apiService: ApiService, private userCookieService: UserCookieService) {
   }
 
   ngOnInit() {

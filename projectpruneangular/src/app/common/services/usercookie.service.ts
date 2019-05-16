@@ -26,6 +26,8 @@ export class UserCookieService {
       sessionData = new UserSessionDTO();
       sessionData.userName = atob(userCookie);
       sessionData.sessionID = atob(sessionCookie);
+
+      console.log(sessionData);
     }
 
     return sessionData;

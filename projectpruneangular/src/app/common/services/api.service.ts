@@ -10,6 +10,7 @@ import {UserSessionDTO} from "../dto/UserSessionDTO";
 import {UserDataDTO} from "../dto/UserDataDTO";
 import {SetStandortDTO} from "../dto/SetStandortDTO";
 import {UserCookieService} from "./usercookie.service";
+import {activateRoutes} from "@angular/router/src/operators/activate_routes";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,12 @@ export class ApiService {
   private userSession: UserSessionDTO;
 
   constructor(private http: HttpClient, private subjectService:SubjectService, private userCookieService: UserCookieService) {
+    let activeSession = userCookieService.getSession();
+
+    if(activeSession != null && this.isSessionValid(activeSession)) {
+      console.log('found active session '+activeSession);
+      this.userSession = activeSession;
+    }
   }
 
   public checkLoginName(loginName:string) {
@@ -58,6 +65,8 @@ export class ApiService {
 
   public login(user:UserLoginDTO){
     if(this.userSession == null) {
+      let activeSession = this.userCookieService.getSession();
+
       let url = this.apiPath + this.loginPath;
 
       let headers = new Headers();
@@ -71,7 +80,7 @@ export class ApiService {
           this.userSession = data;
           this.userSession.userName = user.loginName;
 
-          console.log("push "+JSON.stringify(this.userSession));
+          console.log("push " + JSON.stringify(this.userSession));
 
           this.userCookieService.setSession(this.userSession);
           this.subjectService.loginFinishedSubject.next(this.userSession);
@@ -81,9 +90,12 @@ export class ApiService {
         console.error('error ' + err);
       });
     }
-    else {
-      this.subjectService.loginFinishedSubject.next(this.userSession);
-    }
+
+    this.subjectService.loginFinishedSubject.next(this.userSession);
+  }
+
+  public isSessionValid(sessionDto: UserSessionDTO): boolean {
+    return true;
   }
 
   public getActiveSession() {
