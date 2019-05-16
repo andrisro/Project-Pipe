@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {ApiService} from '../../common/services/api.service';
 import {MatInputModule} from '@angular/material/input';
 import {MatButton} from '@angular/material';
@@ -8,12 +8,13 @@ import {SubjectService} from '../../common/services/subject.service';
 import {Subscription} from 'rxjs';
 import {UserSessionDTO} from '../../common/dto/UserSessionDTO';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy, OnChanges {
   public user: User;
   public userSession: UserSessionDTO;
   title = 'login';
@@ -37,6 +38,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginActionFinished.unsubscribe();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('changes '+ JSON.stringify(changes));
+  }
 
 
   testCall() {
@@ -53,6 +57,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     console.log('Log: ');
     console.log(JSON.stringify(userLoginDto));
     this.apiService.login(userLoginDto);
+  }
+
+  isUsernameValid(): boolean {
+    this.apiService.checkLoginName(this.user.loginName);
+
+    return false;
   }
 }
 

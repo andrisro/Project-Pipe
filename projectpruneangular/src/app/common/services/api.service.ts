@@ -19,12 +19,21 @@ export class ApiService {
   private readonly registrationPath = '/addUser';
   private readonly setStandortPath = '/setStandort';
   private readonly getUserDataPath = '/getBenutzer';
+  private readonly checkLoginNamePath = '/checkLoginName';
   private userSession: UserSessionDTO;
 
   constructor(private http: HttpClient, private subjectService:SubjectService) {
   }
 
-  
+  public checkLoginName(loginName:string) {
+    // let url = this.apiPath + this.checkLoginNamePath + '?id='+loginName;
+    //
+    // const req = this.http.get(url).subscribe((res) => {
+    //   console.log("got response "+JSON.stringify(res));
+    // }, (err) => {
+    //   console.error('error '+err);
+    // })
+  }
 
   public setStandort(standort: SetStandortDTO) {
     let url = this.apiPath + this.setStandortPath;
