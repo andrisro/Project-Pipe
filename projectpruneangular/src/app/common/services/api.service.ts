@@ -95,7 +95,8 @@ export class ApiService {
   }
 
   public isSessionValid(sessionDto: UserSessionDTO): boolean {
-    return true;
+    //TODO: validität prüfen
+    return false;
   }
 
   public getActiveSession() {
