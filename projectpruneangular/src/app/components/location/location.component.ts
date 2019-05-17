@@ -6,6 +6,9 @@ import {ApiService} from '../../common/services/api.service';
 import {SetStandortStandortDTO} from '../../common/dto/SetStandortStandortDTO';
 import {SetStandortDTO} from '../../common/dto/SetStandortDTO';
 import {} from 'googlemaps';
+import {UserCookieService} from "../../common/services/usercookie.service";
+import {forEach} from "@angular/router/src/utils/collection";
+import {UserListDTO} from "../../common/dto/UserListDTO";
 
 @Component({
   selector: 'app-location',
@@ -14,6 +17,9 @@ import {} from 'googlemaps';
 })
 export class LocationComponent implements OnInit, OnDestroy {
   private loginActionFinished: Subscription;
+  private getUserActionFinished: Subscription;
+  private getUserStandortActionFinished: Subscription;
+
   private userSession: UserSessionDTO;
   private geolocationPosition: Position;
 
@@ -21,14 +27,31 @@ export class LocationComponent implements OnInit, OnDestroy {
   map: google.maps.Map;
 
 
-  constructor(private subjectService: SubjectService, private apiService: ApiService) {
+  constructor(private subjectService: SubjectService, private apiService: ApiService, private userCookieService: UserCookieService) {
   }
 
+  private getStandortOfUser(userData: UserListDTO) {
+    this.apiService.getStandort(this.userSession, userData.loginName);
+  }
+  
   ngOnInit() {
     this.loginActionFinished = this.subjectService.loginFinishedSubject.subscribe((data) => {
         this.userSession = data;
+        this.apiService.getAllUsers(this.userSession);
       }
     );
+
+    this.getUserActionFinished = this.subjectService.allUsersSubject.subscribe((data) => {
+      data.benutzerliste.forEach((user) => {
+        console.log('get standort '+ JSON.stringify(user));
+        this.getStandortOfUser(user);
+      });
+    });
+
+    this.getUserStandortActionFinished = this.subjectService.userStandortSubject.subscribe((data) => {
+      console.log("got standort "+data);
+    });
+
 
     var myLatLng = {lat: -25.363, lng: 131.044};
 
