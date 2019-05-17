@@ -13,6 +13,7 @@ import {MatNativeDateModule} from '@angular/material';
 import {ProfileComponent} from './components/profile/profile.component';
 import {LocationComponent} from './components/location/location.component';
 import {CookieService} from 'ngx-cookie-service';
+import {InitComponent} from './components/init/init.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {CookieService} from 'ngx-cookie-service';
     LoginComponent,
     HeaderComponent,
     ProfileComponent,
-    LocationComponent
+    LocationComponent,
+    InitComponent
   ],
   imports: [
     BrowserModule,

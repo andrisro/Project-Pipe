@@ -67,10 +67,12 @@ export class ApiService {
   }
 
   public register(user:UserRegistrationDTO) {
-    let url = this.apiPath + this.loginPath;
+    let url = this.apiPath + this.registrationPath;
 
-    const req = this.http.post(url, user).subscribe((res) => {
-      console.log("got response "+JSON.stringify(res));
+    console.log("request is "+JSON.stringify(user));
+    const req = this.http.post<UserRegistrationDTO>(url, user).subscribe((res) => {
+      console.log("got response register "+JSON.stringify(res));
+      this.subjectService.userRegisteredSubject.next(res);
     }, (err) => {
       console.error('error '+err);
     })

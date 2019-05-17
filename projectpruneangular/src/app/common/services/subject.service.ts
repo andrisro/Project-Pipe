@@ -4,6 +4,8 @@ import {Injectable} from '@angular/core';
 import {UserListDTO} from '../dto/UserListDTO';
 import {UserDataDTO} from '../dto/UserDataDTO';
 import {GetStandortDTO} from '../dto/GetStandortDTO';
+import {UserRegistrationEmailDTO} from "../dto/UserRegistrationEmailDTO";
+import {UserRegistrationDTO} from "../dto/UserRegistrationDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -13,4 +15,5 @@ export class SubjectService {
   public readonly userDataSubject = new Subject<UserListDTO>();
   public readonly allUsersSubject = new Subject<UserDataDTO>();
   public readonly userStandortSubject = new Subject<GetStandortDTO>();
+  public readonly userRegisteredSubject = new Subject<UserRegistrationDTO>();
 }
