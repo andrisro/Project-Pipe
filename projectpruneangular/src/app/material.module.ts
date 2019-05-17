@@ -14,7 +14,9 @@ import {
   MatDialogModule,
   MatProgressSpinnerModule,
   MatSnackBarModule,
-  MatSortModule, MatSelectionList
+  MatSortModule,
+  MatSelectionList,
+  MatButtonToggleModule
 } from '@angular/material';
 
 @NgModule({
