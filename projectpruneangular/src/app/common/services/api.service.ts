@@ -31,8 +31,8 @@ export class ApiService {
   constructor(private http: HttpClient, public subjectService:SubjectService, private userCookieService: UserCookieService) {
     let activeSession = userCookieService.getSession();
 
-    if(activeSession != null && this.isSessionValid(activeSession)==true) {
-      console.log('found active session '+activeSession);
+    if(activeSession != null && this.isSessionValid(activeSession)==true &&activeSession.sessionID != "" && activeSession.sessionID!= "") {
+      console.log('found active session '+JSON.stringify(activeSession));
       this.userSession = activeSession;
     }
   }

@@ -4,8 +4,8 @@ import {Injectable} from '@angular/core';
 import {UserListDTO} from '../dto/UserListDTO';
 import {UserDataDTO} from '../dto/UserDataDTO';
 import {GetStandortDTO} from '../dto/GetStandortDTO';
-import {UserRegistrationEmailDTO} from "../dto/UserRegistrationEmailDTO";
-import {UserRegistrationDTO} from "../dto/UserRegistrationDTO";
+import {UserRegistrationEmailDTO} from '../dto/UserRegistrationEmailDTO';
+import {UserRegistrationDTO} from '../dto/UserRegistrationDTO';
 
 @Injectable({
   providedIn: 'root'
