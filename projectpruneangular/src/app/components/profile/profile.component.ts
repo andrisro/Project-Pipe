@@ -4,6 +4,7 @@ import {SubjectService} from '../../common/services/subject.service';
 import {Subscription} from 'rxjs';
 import {UserSessionDTO} from '../../common/dto/UserSessionDTO';
 import {UserDataDTO} from '../../common/dto/UserDataDTO';
+import {UserListDTO} from "../../common/dto/UserListDTO";
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +16,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   title = 'login';
   private loginActionFinished: Subscription;
   private userDataActionFinished: Subscription;
-  public userData: UserDataDTO;
+  public userData: UserListDTO;
 
   constructor(private apiService: ApiService, private subjectService: SubjectService) {
   }
@@ -31,7 +32,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     );
 
     this.userDataActionFinished = this.subjectService.userDataSubject.subscribe((data) => {
-        console.log('got user data: '+ JSON.stringify(data));
+        console.log('got user data: ' + JSON.stringify(data));
 
         this.userData = data;
     });
