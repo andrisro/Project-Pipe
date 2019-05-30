@@ -17,8 +17,5 @@ export class RegistrationComponent {
 
   testCall() {
     console.log('registration');
-
-
-    //this.apiService.login('tester', 'tester');
   }
 }
