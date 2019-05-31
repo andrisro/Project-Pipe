@@ -2,31 +2,39 @@
 
 <form class="registration-form">
   <mat-form-field class="registration-full-width">
-    <input matInput placeholder="Name" value="">
+    <input matInput placeholder="Name" name="lastName" [(ngModel)]="user.lastName" value="">
   </mat-form-field>
 
   <mat-form-field class="registration-full-width">
-    <input matInput placeholder="Vorname" value="">
+    <input matInput placeholder="Vorname" name="firstName" [(ngModel)]="user.firstName" value="">
   </mat-form-field>
 
   <mat-form-field class="registration-full-width">
-    <input matInput placeholder="UserName" value="">
+    <input matInput placeholder="UserName" name="userName" [(ngModel)]="user.loginName" value="">
   </mat-form-field>
 
   <mat-form-field class="registration-full-width">
-    <input matInput type="password" placeholder="Passwort">
+    <input matInput type="password" name="password" [(ngModel)]="user.password" placeholder="Passwort">
   </mat-form-field>
 
   <mat-form-field class="registration-full-width">
-    <input matInput placeholder="PLZ" value="">
+    <input matInput placeholder="PLZ" name="zip" [(ngModel)]="user.zip" value="">
   </mat-form-field>
 
   <mat-form-field class="registration-full-width">
-    <input matInput placeholder="Ort" value="">
+    <input matInput placeholder="Ort" name="city" [(ngModel)]="user.city" value="">
   </mat-form-field>
 
   <mat-form-field class="registration-full-width">
-    <input matInput placeholder="Straße" value="">
+    <input matInput placeholder="Straße" name="street" [(ngModel)]="user.street" value="">
+  </mat-form-field>
+
+  <mat-form-field class="registration-full-width">
+    <input matInput placeholder="Land" name="country" [(ngModel)]="user.country" value="">
+  </mat-form-field>
+
+  <mat-form-field class="registration-full-width">
+    <input matInput placeholder="Telefon" name="telephone" [(ngModel)]="user.telephone" value="">
   </mat-form-field>
 
   <h3>Bitte lösen Sie die folgende Aufgabe:</h3>
@@ -35,7 +43,5 @@
     <input matInput placeholder="Ergebnis">
   </mat-form-field>
 
-<button mat-raised-button class="registration-submit" type="submit">
-  <p>Submit</p>
-</button>
+<button mat-raised-button (click)="registration()">Registrieren</button>
 </form>

@@ -13,6 +13,7 @@ import {UserCookieService} from "./usercookie.service";
 import {activateRoutes} from "@angular/router/src/operators/activate_routes";
 import {UserListDTO} from "../dto/UserListDTO";
 import {User} from "../../components/login/login.component";
+import {GetStandortDTO} from "../dto/GetStandortDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +31,8 @@ export class ApiService {
   constructor(private http: HttpClient, public subjectService:SubjectService, private userCookieService: UserCookieService) {
     let activeSession = userCookieService.getSession();
 
-    if(activeSession != null && this.isSessionValid(activeSession)==true) {
-      console.log('found active session '+activeSession);
+    if(activeSession != null && this.isSessionValid(activeSession)==true &&activeSession.sessionID != "" && activeSession.sessionID!= "") {
+      console.log('found active session '+JSON.stringify(activeSession));
       this.userSession = activeSession;
     }
   }
@@ -57,18 +58,21 @@ export class ApiService {
   }
 
   public getStandort(userSession: UserSessionDTO, userName: string) {
+    console.log("get standort ");
     let url = this.apiPath + this.getStandortPath + '?login='+userSession.userName+'&session='+userSession.sessionID+'&id='+userName;
 
-    const req = this.http.get(url).subscribe((data) => {
-      console.log(JSON.stringify(data));
+    const req = this.http.get<GetStandortDTO>(url).subscribe((data) => {
+      this.subjectService.userStandortSubject.next(data);
     });
   }
 
   public register(user:UserRegistrationDTO) {
-    let url = this.apiPath + this.loginPath;
+    let url = this.apiPath + this.registrationPath;
 
-    const req = this.http.post(url, user).subscribe((res) => {
-      console.log("got response "+JSON.stringify(res));
+    console.log("request is "+JSON.stringify(user));
+    const req = this.http.post<UserRegistrationDTO>(url, user).subscribe((res) => {
+      console.log("got response register "+JSON.stringify(res));
+      this.subjectService.userRegisteredSubject.next(res);
     }, (err) => {
       console.error('error '+err);
     })
@@ -105,7 +109,7 @@ export class ApiService {
 
   public isSessionValid(sessionDto: UserSessionDTO): boolean {
     //TODO: validität prüfen
-    return false;
+    return true;
   }
 
   public getActiveSession() {
@@ -120,7 +124,6 @@ export class ApiService {
     this.callGetUsers(session).subscribe((data) => {
       data.benutzerliste.forEach( (user) => {
         if (user.loginName == session.userName) {
-          console.log("subject service defined ? ");
           this.subjectService.userDataSubject.next(user);
         }
       });

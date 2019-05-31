@@ -37,4 +37,8 @@ export class UserCookieService {
     this.cookieService.set(this.SESSION_COOKIE_NAME, btoa(sessionData.sessionID));
     this.cookieService.set(this.USERNAME_COOKIE_NAME, btoa(sessionData.userName));
   }
+
+  deleteCookies() {
+    this.cookieService.deleteAll();
+  }
 }
