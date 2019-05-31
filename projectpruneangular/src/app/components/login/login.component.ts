@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit, OnDestroy, OnChanges {
   public userSession: UserSessionDTO;
   title = 'login';
   private loginActionFinished: Subscription;
+  private wrongLoginSubject: Subscription;
+  wrongLogin:boolean = false; 
 
   constructor(private apiService: ApiService, private subjectService: SubjectService) {
     this.user = new User();
@@ -30,12 +32,19 @@ export class LoginComponent implements OnInit, OnDestroy, OnChanges {
         this.userSession = data;
 
         this.apiService.getUserData(this.userSession);
+
+        this.wrongLogin = false;
       }
     );
+
+    this.wrongLoginSubject = this.subjectService.wrongLoginSubject.subscribe((data) => {
+        this.wrongLogin = true;
+    });
   }
 
   ngOnDestroy() {
     this.loginActionFinished.unsubscribe();
+    this.wrongLoginSubject.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

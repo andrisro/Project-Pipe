@@ -15,6 +15,13 @@
     <button mat-raised-button routerLink="/registration">Registrieren</button>
   </form>
 </div>
-<div *ngIf="userSession!=null">
-  Erfolgreich eingeloggt
+<div *ngIf="userSession!=null" style="margin-top:1em; color: green">
+  Erfolgreich eingeloggt<br />
+  <img style="margin-top: 1em; height:20em; width: 20em" src="https://media1.giphy.com/media/RNpXqQrL53cfm/giphy.gif?cid=790b76115cf0fb545764483749a48a3b&rid=giphy.gif" />
+
+</div>
+
+<div *ngIf="wrongLogin" style="color:red; margin-top:1em;">
+  Wrong Login!<br />
+  <img style="margin-top: 1em; height:20em; width: 20em" src="https://media3.giphy.com/media/kyHUOat3LQkXS/giphy.gif?cid=790b76115cf0f93764444e314171a3f9&rid=giphy.gif" />
 </div>

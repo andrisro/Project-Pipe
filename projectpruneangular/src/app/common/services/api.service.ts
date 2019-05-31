@@ -100,6 +100,8 @@ export class ApiService {
 
           this.userCookieService.setSession(this.userSession);
           this.subjectService.loginFinishedSubject.next(this.userSession);
+        } else {
+          this.subjectService.wrongLoginSubject.next();
         }
 
       }, (err) => {

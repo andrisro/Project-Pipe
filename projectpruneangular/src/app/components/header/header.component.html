@@ -11,14 +11,17 @@
   <div class="fill-toolbar-space" style="align-content: center">
   </div>
 
-  <div class="header-icon-container" *ngIf="isUserLoggedIn()">
-    <button mat-icon-button routerLink="/location">
-      <mat-icon mat-list-icon class="mat-icon-32">location_on</mat-icon>
-    </button>
+  <div class="header-user-name" *ngIf="isUserLoggedIn()">
+    <span routerLink="/profile">{{userSession.userName}}</span>
   </div>
   <div class="header-icon-container" *ngIf="isUserLoggedIn()">
     <button mat-icon-button routerLink="/profile">
       <mat-icon mat-list-icon class="mat-icon-32">person</mat-icon>
+    </button>
+  </div>
+  <div class="header-icon-container" *ngIf="isUserLoggedIn()">
+    <button mat-icon-button routerLink="/location">
+      <mat-icon mat-list-icon class="mat-icon-32">location_on</mat-icon>
     </button>
   </div>
   <div class="header-icon-container" *ngIf="isUserLoggedIn()">
