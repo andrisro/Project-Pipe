@@ -4,6 +4,7 @@ import {LoginComponent} from './components/login/login.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {LocationComponent} from './components/location/location.component';
 import {InitComponent} from './components/init/init.component';
+import {LogoutComponent} from './components/logout/logout.component';
 
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   {path: 'profile', component: ProfileComponent},
   {path: 'location', component: LocationComponent},
   {path: 'init', component: InitComponent},
+  {path: 'logout', component: LogoutComponent},
   {path: '', component: LoginComponent},
   {path: '**', component: LoginComponent}
 ];
