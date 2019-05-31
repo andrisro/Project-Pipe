@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {startTimeRange} from "@angular/core/src/profile/wtf_impl";
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,25 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'projectpruneangular';
 
-  constructor() {
+  timeLeft: number = 60;
+  interval;
 
+  startTimer() {
+    this.interval = setInterval(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--;
+      } else {
+        this.pauseTimer();
+      }
+    }, 1000);
+  }
+
+  pauseTimer() {
+    clearInterval(this.interval);
+  }
+
+  constructor() {
+    this.timeLeft = 3;
+    this.startTimer();
   }
 }

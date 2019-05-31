@@ -13,8 +13,9 @@
 }
 
 .header-logo {
-  width: 3em;
-  content:url("https://cdn.pixabay.com/photo/2016/11/04/14/13/google-maps-1797882_1280.png");
+  margin-top: 0.5em;
+  width: 15em;
+  content:url("/assets/logo.png");
 }
 
 .header-logo-container {
