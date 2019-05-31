@@ -1,5 +1,5 @@
 <mat-accordion class="headers-align">
-  <mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel [expanded]="true" (click)="resetSetLocationBool()">
     <mat-expansion-panel-header>
       <mat-panel-title>
         <mat-icon>location_off</mat-icon> Standort manuell setzen
@@ -19,6 +19,8 @@
         </mat-form-field>
 
         <button mat-raised-button (click)="setStandortByFormData()">Standort setzen</button>
+
+        <p class="location-form-width" *ngIf="successMessageSetLocation" style="color: green">Standort erfolgreich gespeichert.</p>
       </form>
     </mat-panel-description>
   </mat-expansion-panel>

@@ -25,6 +25,8 @@ export class LocationComponent implements OnInit, OnDestroy {
   private locationFormData: LocationFormData;
   private geolocationPosition: Position;
 
+  successMessageSetLocation = false;
+
   @ViewChild('gmap') gmapElement: any;
   map: google.maps.Map;
 
@@ -150,7 +152,37 @@ export class LocationComponent implements OnInit, OnDestroy {
   }
 
   setStandortByFormData() {
+    const geocoder = new google.maps.Geocoder();
 
+    const address = encodeURI(this.locationFormData.country + ' ' + this.locationFormData.city + ' ' + this.locationFormData.streetAndHouseNumber);
+
+    console.log('address ' + address);
+
+    geocoder.geocode( { 'address' : address }, (results, status) => {
+      if(status == google.maps.GeocoderStatus.OK) {
+        console.log('ok');
+
+        const setStandort = new SetStandortDTO();
+        setStandort.standort = new SetStandortStandortDTO();
+        setStandort.standort.breitengrad = results[0].geometry.location.lat();
+        setStandort.standort.laengengrad = results[0].geometry.location.lng();
+        setStandort.sitzung = this.userSession.sessionID;
+        setStandort.loginName = this.userSession.userName;
+
+        const pos = {
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng()
+        };
+
+        this.setPositionWithoutInfo(pos);
+        this.apiService.setStandort(setStandort);
+        this.successMessageSetLocation = true;
+      }
+    } );
+  }
+
+  resetSetLocationBool() {
+    this.successMessageSetLocation = false;
   }
 }
 
