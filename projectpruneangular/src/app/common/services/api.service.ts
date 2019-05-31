@@ -114,6 +114,7 @@ export class ApiService {
     let activeSession = this.userCookieService.getSession();
 
     this.userCookieService.deleteCookies();
+    this.userSession = null; 
 
     const req = this.http.post(url,activeSession).subscribe((data) => {
       console.log("got response "+JSON.stringify(data));

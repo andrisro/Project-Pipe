@@ -20,14 +20,12 @@ export class UserCookieService {
 
     let sessionData = null;
 
-    if (sessionCookie != null && userCookie != null) {
+    if (sessionCookie != null && userCookie != null && sessionCookie.length > 0 && userCookie.length > 0 ) {
       console.log(sessionCookie + ' - ' + userCookie);
 
       sessionData = new UserSessionDTO();
       sessionData.userName = atob(userCookie);
       sessionData.sessionID = atob(sessionCookie);
-
-      console.log(sessionData);
     }
 
     return sessionData;

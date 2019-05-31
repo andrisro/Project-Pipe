@@ -20,10 +20,10 @@ export class LogoutComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit() {
     this.apiService.logout();
+    this.subjectService.userLoggedOut.next();
   }
 
   ngOnDestroy() {
-    this.loginActionFinished.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
