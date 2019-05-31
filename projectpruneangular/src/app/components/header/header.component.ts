@@ -33,8 +33,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   isUserLoggedIn(): boolean {
     if (this.userSession != null) {
-      console.log(this.userSession);
-
       return true;
     }
 

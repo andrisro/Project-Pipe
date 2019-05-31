@@ -43,12 +43,19 @@ export class LocationComponent implements OnInit, OnDestroy {
 
     this.getUserActionFinished = this.subjectService.allUsersSubject.subscribe((data) => {
       data.benutzerliste.forEach((user) => {
-        console.log('get standort '+ JSON.stringify(user));
+        console.log('get standort all users'+ JSON.stringify(user));
         this.getStandortOfUser(user);
       });
     });
 
     this.getUserStandortActionFinished = this.subjectService.userStandortSubject.subscribe((data) => {
+      // setPositionWithoutInfo
+      var pos = {
+        lat: data.breitengrad,
+        lng: data.laengengrad
+      };
+
+      this.setPositionWithoutInfo(pos);
       console.log("got standort "+data);
     });
 
@@ -71,7 +78,7 @@ export class LocationComponent implements OnInit, OnDestroy {
       window.navigator.geolocation.getCurrentPosition(
         position => {
           this.geolocationPosition = position;
-            console.log(position);
+          console.log(position);
 
           this.setPosition(position);
 
@@ -98,8 +105,7 @@ export class LocationComponent implements OnInit, OnDestroy {
           }
         }
       );
-    }
-    ;
+    };
   }
 
   setMapType(mapTypeId: string) {
@@ -108,7 +114,7 @@ export class LocationComponent implements OnInit, OnDestroy {
   }
 
   setPosition(data: Position) {
-    console.log("set position");
+    console.log('set position');
     console.log(JSON.stringify(data));
 
     var pos = {
@@ -116,12 +122,8 @@ export class LocationComponent implements OnInit, OnDestroy {
       lng: data.coords.longitude
     };
 
-    console.log("add marker");
-    var marker = new google.maps.Marker({
-      position: pos,
-      map: this.map,
-      title: 'Mein Standort'
-    });
+    console.log('add marker');
+    this.setPositionWithoutInfo(pos);
 
     var infoWindow = new google.maps.InfoWindow;
 
@@ -130,6 +132,14 @@ export class LocationComponent implements OnInit, OnDestroy {
     infoWindow.open(this.map);
     this.map.setCenter(pos);
 
+  }
+
+  setPositionWithoutInfo(pos) {
+    var marker = new google.maps.Marker({
+      position: pos,
+      map: this.map,
+      title: 'Mein Standort'
+    });
   }
 
   ngOnDestroy() {
