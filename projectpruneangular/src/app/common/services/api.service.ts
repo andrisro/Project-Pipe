@@ -26,6 +26,7 @@ export class ApiService {
   private readonly  getStandortPath = '/getStandort';
   private readonly getUserDataPath = '/getBenutzer';
   private readonly checkLoginNamePath = '/checkLoginName';
+  private readonly  logoutPath = '/logout';
   private userSession: UserSessionDTO;
 
   constructor(private http: HttpClient, public subjectService:SubjectService, private userCookieService: UserCookieService) {
@@ -105,6 +106,21 @@ export class ApiService {
         console.error('error ' + err);
       });
     }
+  }
+
+  public logout() {
+    let url = this.apiPath + this.logoutPath;
+
+    let activeSession = this.userCookieService.getSession();
+
+    this.userCookieService.deleteCookies();
+    this.userSession = null;
+
+    const req = this.http.post(url,activeSession).subscribe((data) => {
+      console.log("got response "+JSON.stringify(data));
+    }, (err) => {
+      console.error('error '+err);
+    })
   }
 
   public isSessionValid(sessionDto: UserSessionDTO): boolean {

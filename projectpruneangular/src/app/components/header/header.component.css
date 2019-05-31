@@ -9,12 +9,12 @@
 
 
 .header-icon-container {
-  width: 50px;
+  width: 2em;
 }
 
 .header-logo {
-  width: 70px;
-  content:url("https://cdn.pixabay.com/photo/2017/01/31/23/42/animal-2028258_640.png");
+  width: 3em;
+  content:url("https://cdn.pixabay.com/photo/2016/11/04/14/13/google-maps-1797882_1280.png");
 }
 
 .header-logo-container {

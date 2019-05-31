@@ -16,4 +16,5 @@ export class SubjectService {
   public readonly allUsersSubject = new Subject<UserDataDTO>();
   public readonly userStandortSubject = new Subject<GetStandortDTO>();
   public readonly userRegisteredSubject = new Subject<UserRegistrationDTO>();
+  public readonly userLoggedOut = new Subject();
 }

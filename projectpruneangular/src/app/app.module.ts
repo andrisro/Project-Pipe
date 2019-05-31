@@ -15,6 +15,7 @@ import {ProfileComponent} from './components/profile/profile.component';
 import {LocationComponent} from './components/location/location.component';
 import {CookieService} from 'ngx-cookie-service';
 import {InitComponent} from './components/init/init.component';
+import {LogoutComponent} from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,9 @@ import {InitComponent} from './components/init/init.component';
     ProfileComponent,
     LocationComponent,
     RegistrationComponent,
-    InitComponent
+    InitComponent,
+    InitComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
