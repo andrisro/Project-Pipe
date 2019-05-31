@@ -4,10 +4,10 @@
   <p>
     Hier siehst du deine aktuellen Profildaten:
   </p>
-  <form class="profile-container">
+  <div class="example-container">
     <mat-form-field>
       <input matInput type="string" placeholder="Vorname" min="10" value="{{userData.vorname}}">
-<!--      <mat-error *ngIf="options.get('fontSize')?.invalid">Min size: 10px</mat-error>-->
+      <!--      <mat-error *ngIf="options.get('fontSize')?.invalid">Min size: 10px</mat-error>-->
     </mat-form-field>
     <mat-form-field>
       <input matInput type="string" placeholder="Nachname" min="10" value="{{userData.nachname}}">
@@ -15,8 +15,7 @@
     <mat-form-field>
       <input matInput type="string" placeholder="Login Name" min="10" value="{{userData.loginName}}">
     </mat-form-field>
-  </form>
-
+  </div>
 </div>
 
 <div *ngIf="userData==null">

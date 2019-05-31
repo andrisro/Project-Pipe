@@ -1,0 +1,27 @@
+mat-grid-tile {
+  background: lightblue;
+}
+
+mat-grid {
+  background: lightgray;
+}
+
+mat-grid-tile {
+  width: 100%;
+  display: flex;
+  background-color: yellow;
+  flex-direction: column;
+}
+
+mat-grid-tile > * {
+  width: 100%;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container > * {
+  width: 100%;
+}

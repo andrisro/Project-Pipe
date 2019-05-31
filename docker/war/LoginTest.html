@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Login Page</title>
+<!-- jQuery von Google laden -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script type="text/javascript">
+function loginVerarbeiten() {
+var bnameS = document.getElementById('bname').value;
+var passwdS = document.getElementById('passwd').value;
+	alert("Login verarbeiten: " + bnameS +", " + passwdS);
+// $.post geht leider nicht, weil nicht alle erforderlichen Parameter
+// zur Verfügung stehen.
+// 	$.post("http://ibaawhereru.appspot.com/fap/fapservice/login",
+// 	{ loginName: '"' + bnameS + '"',
+// 	  passwort: {passwort: '"' + passwdS + '"'}
+// 	},
+// 	function(data, status) {
+// 	   alert("Data: " + data + "\nStatus: " + status);},
+// 	'json'
+// 	);
+	$.ajax({
+		type: "POST",
+		url: "http://localhost:8080/FAPServer/service/fapservice/login",
+		data: '{loginName:' + '"' + bnameS + '",' +
+		 	  'passwort:{passwort:' + '"' + passwdS + '"}}', //das JSON-Objekt als String
+		 dataType: 'application/json', //das wird erwartet
+		 contentType: 'application/json', //das wird geschickt
+		 crossDomain: true,
+		 complete: function(data, status) { //Callback-Funktion
+			 alert("Zurückgegebene Daten: " + data.responseText);
+			 var session = JSON.parse(data.responseText);
+		 	   alert("Session: " + session.sessionID );}
+	});
+}
+</script>
+</head>
+<body>
+<h1>FAPServerGAE Post-Test</h1>
+	<form action="loginVerarbeiten()">
+	<table>
+	<tr><td>Benutzername</td><td>Passwort</td></tr>
+	<tr><td><input id="bname" type="text" maxlength="20"></td>
+	<td><input id="passwd" type="password" maxlength="10"></td>
+	<tr><td><input id="button" value="Daten senden" type="button" onclick="loginVerarbeiten()" style="width: 146px; "></td></tr>	
+	</table>
+	</form>
+</body>
+</html>
