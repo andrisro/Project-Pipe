@@ -6,9 +6,10 @@ import {ApiService} from '../../common/services/api.service';
 import {SetStandortStandortDTO} from '../../common/dto/SetStandortStandortDTO';
 import {SetStandortDTO} from '../../common/dto/SetStandortDTO';
 import {} from 'googlemaps';
-import {UserCookieService} from "../../common/services/usercookie.service";
-import {forEach} from "@angular/router/src/utils/collection";
-import {UserListDTO} from "../../common/dto/UserListDTO";
+import {UserCookieService} from '../../common/services/usercookie.service';
+import {forEach} from '@angular/router/src/utils/collection';
+import {UserListDTO} from '../../common/dto/UserListDTO';
+import {MatExpansionModule} from '@angular/material';
 
 @Component({
   selector: 'app-location',
@@ -21,6 +22,7 @@ export class LocationComponent implements OnInit, OnDestroy {
   private getUserStandortActionFinished: Subscription;
 
   private userSession: UserSessionDTO;
+  private locationFormData: LocationFormData;
   private geolocationPosition: Position;
 
   @ViewChild('gmap') gmapElement: any;
@@ -28,12 +30,13 @@ export class LocationComponent implements OnInit, OnDestroy {
 
 
   constructor(private subjectService: SubjectService, private apiService: ApiService, private userCookieService: UserCookieService) {
+    this.locationFormData = new LocationFormData();
   }
 
   private getStandortOfUser(userData: UserListDTO) {
     this.apiService.getStandort(this.userSession, userData.loginName);
   }
-  
+
   ngOnInit() {
     this.loginActionFinished = this.subjectService.loginFinishedSubject.subscribe((data) => {
         this.userSession = data;
@@ -43,26 +46,26 @@ export class LocationComponent implements OnInit, OnDestroy {
 
     this.getUserActionFinished = this.subjectService.allUsersSubject.subscribe((data) => {
       data.benutzerliste.forEach((user) => {
-        console.log('get standort all users'+ JSON.stringify(user));
+        console.log('get standort all users' + JSON.stringify(user));
         this.getStandortOfUser(user);
       });
     });
 
     this.getUserStandortActionFinished = this.subjectService.userStandortSubject.subscribe((data) => {
       // setPositionWithoutInfo
-      var pos = {
+      const pos = {
         lat: data.breitengrad,
         lng: data.laengengrad
       };
 
       this.setPositionWithoutInfo(pos);
-      console.log("got standort "+data);
+      console.log('got standort ' + data);
     });
 
 
-    var myLatLng = {lat: -25.363, lng: 131.044};
+    const myLatLng = {lat: -25.363, lng: 131.044};
 
-    var mapProp = {
+    const mapProp = {
       center: myLatLng,
       zoom: 4,
       mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -82,7 +85,7 @@ export class LocationComponent implements OnInit, OnDestroy {
 
           this.setPosition(position);
 
-          var setStandortDto = new SetStandortDTO();
+          const setStandortDto = new SetStandortDTO();
           setStandortDto.sitzung = this.userSession.sessionID;
           setStandortDto.loginName = this.userSession.userName;
           setStandortDto.standort = new SetStandortStandortDTO();
@@ -105,7 +108,7 @@ export class LocationComponent implements OnInit, OnDestroy {
           }
         }
       );
-    };
+    }
   }
 
   setMapType(mapTypeId: string) {
@@ -117,7 +120,7 @@ export class LocationComponent implements OnInit, OnDestroy {
     console.log('set position');
     console.log(JSON.stringify(data));
 
-    var pos = {
+    const pos = {
       lat: data.coords.latitude,
       lng: data.coords.longitude
     };
@@ -125,7 +128,7 @@ export class LocationComponent implements OnInit, OnDestroy {
     console.log('add marker');
     this.setPositionWithoutInfo(pos);
 
-    var infoWindow = new google.maps.InfoWindow;
+    const infoWindow = new google.maps.InfoWindow;
 
     infoWindow.setPosition(pos);
     infoWindow.setContent('Location found.');
@@ -135,7 +138,7 @@ export class LocationComponent implements OnInit, OnDestroy {
   }
 
   setPositionWithoutInfo(pos) {
-    var marker = new google.maps.Marker({
+    const marker = new google.maps.Marker({
       position: pos,
       map: this.map,
       title: 'Mein Standort'
@@ -145,7 +148,22 @@ export class LocationComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.loginActionFinished.unsubscribe();
   }
+
+  setStandortByFormData() {
+
+  }
 }
 
+export class LocationFormData {
+  streetAndHouseNumber: string;
+  city: string;
+  country: string;
+
+  constructor() {
+    this.streetAndHouseNumber = '';
+    this.city = '';
+    this.country = '';
+  }
+}
 
 

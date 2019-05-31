@@ -10,7 +10,7 @@ import {MaterialModule} from './material.module';
 import {RegistrationComponent} from './components/registration/registration.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HeaderComponent} from './components/header/header.component';
-import {MatNativeDateModule} from '@angular/material';
+import {MatExpansionModule, MatNativeDateModule} from '@angular/material';
 import {ProfileComponent} from './components/profile/profile.component';
 import {LocationComponent} from './components/location/location.component';
 import {CookieService} from 'ngx-cookie-service';
@@ -35,7 +35,8 @@ import {LogoutComponent} from './components/logout/logout.component';
     HttpClientModule,
     AppRoutingModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
+    MatExpansionModule
   ],
   providers: [
     CookieService

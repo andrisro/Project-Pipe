@@ -1,0 +1,32 @@
+mat-icon {
+  margin-right: 1em;
+}
+
+.headers-align {
+  margin-top: 2em;
+}
+
+.headers-align .mat-expansion-panel-header-title,
+.headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+mat-form-field {
+  margin-right: 12px;
+}
+
+.location-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.location-form-width {
+  width: 100%;
+}
+

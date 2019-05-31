@@ -1,6 +1,40 @@
-<!--GMAPS:-->
+<mat-accordion class="headers-align">
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>location_off</mat-icon> Standort manuell setzen
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-panel-description>
+      <form class="location-form">
+        <p class="location-form-width">Dein Standort wird standardmäßig automatisch gesetzt. Hier kannst du ihn auch manuell setzen.</p>
+        <mat-form-field class="location-form-width">
+          <input matInput placeholder="Straße & Hausnummer" [(ngModel)]="locationFormData.streetAndHouseNumber" name="streetAndHouseNumber" value="">
+        </mat-form-field>
+        <mat-form-field class="location-form-width">
+          <input matInput placeholder="Ort" [(ngModel)]="locationFormData.city" name="city" value="">
+        </mat-form-field>
+        <mat-form-field class="location-form-width">
+                    <input matInput placeholder="Land" [(ngModel)]="locationFormData.country" name="country" value="">
+        </mat-form-field>
 
-<div #gmap style="width:100%;height:600px" ></div>
+        <button mat-raised-button (click)="setStandortByFormData()">Standort setzen</button>
+      </form>
+    </mat-panel-description>
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="true" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>map</mat-icon> Standorte
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-panel-description>
+      <div #gmap style="width:100%;height:600px" ></div>
+    </mat-panel-description>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<!--GMAPS:-->
 
 
 <!--<button mat-raised-button (click)="setMapType('terrain')" class="btn btn-primary">Terrain</button>-->
