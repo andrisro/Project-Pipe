@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Simple FAP Client</title>
+<script type="text/javascript">
+function sessionIDEintragen() {
+	let platzhalter = document.getElementById('session');
+	platzhalter.innerHTML = sessionStorage.getItem("sessionID");
+}
+</script>
+</head>
+<body onload=sessionIDEintragen()>
+<h1>Simple FAP Client - Anwendungsseite</h1>
+<p>Auf diese Seite kommen Sie, wenn Sie sich erfolgreich angemeldet haben.</p>
+<p>Hier können Sie aus einer Liste von Freunden wählen, deren Standort Sie angezeigt bekommen möchten oder Sie ändern Ihren eigenen Standort (DESKTOP-Version!)
+<p>Ihre SitzungsID ist übrigens <b id=session>bla bla</b>
+<p>Wenn Sie keine Lust mehr haben, können Sie sich auch <a href="Abmeldung.html">abmelden</a>.</p>
+</body>
+</html>

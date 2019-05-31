@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Simple FAP Client</title>
+</head>
+<body>
+<h1>Simple FAP Client - Registrierung</h1>
+<p>Vor der ersten Benutzung von FRIENDS AND PLACES müssen Sie einen Benutzernamen und ein Passwort vergeben. Außerdem benötigen wir Ihre Heimatadresse.<br>Keine Angst: Wir geben Ihre Daten nicht an Dritte* weiter! </p>
+	<article>
+		<form name="Benutzerregistrierung"
+			onsubmit="Registrierung()" accept-charset=utf-8>
+			<table>
+				<tr>
+					<td>Vorname:</td>
+					<td><input name="Vorname" type="text"
+						size="25" maxlength="40" /></td>
+				</tr>
+				<tr>
+					<td>Nachname:</td>
+					<td><input name="Nachname" type="text"
+						size="25" maxlength="40" /></td>
+				</tr>
+				<tr>
+					<td>Anmeldename</td>
+					<td><input name="ID" id="ID" type="text"
+						size="25" maxlength="30"
+						onkeyup="ueberpruefeAnmeldenamen(this)" /></td>
+					<td>
+						<div id="benutzermeldung"></div>
+					</td>
+				</tr>
+				<tr>
+					<td>Passwort:</td>
+					<td><input name="PASSWORT" id="PASSWORT"
+						type="password" size="25" maxlength="30"
+						onblur="PruefePasswort(this)" /></td>
+					<td>
+						<div id="PasswortMeldung">&nbsp;</div>
+					</td>
+				</tr>
+				<tr>
+					<td>PLZ:</td>
+					<td><input name="PLZ" id="PLZ" type="text"
+						size="5" maxlength="5" onblur="sucheOrt(this)" />
+					</td>
+					<td>
+						<div id="PLZMeldung">&nbsp;</div>
+					</td>
+				</tr>
+				<tr>
+					<td>Ort:</td>
+					<td><input name="Ort" id="Ort" type="text"
+						size="25" maxlength="30" /></td>
+				</tr>
+				<tr>
+					<td>Straße</td>
+					<td><input name="Strasse" type="text"
+						size="25" maxlength="70" /></td>
+				</tr>
+			</table>
+			<p>
+				<b>ACHTUNG:</b> Um sich sicher als Mensch zu
+				identifizieren, lösen Sie bitte die folgende
+				einfache Additionsaufgabe: <br />
+			</p>
+			<div id="captchaAufgabe">Platz für Aufgabe</div>
+			<input type="text" id="captchaAntwort" maxlength="3"
+				value="" /> <br /> <br /> <input type="submit"
+				id="sendeknopf" value="Benutzer hinzufügen" />
+		</form>
+	</article>
+	<article>
+		<h1>Sie haben schon eine Benutzerkennung?</h1>
+		<p>
+			Dann kommen Sie hier direkt zum <a href="index.html">Login</a>.
+		
+	</article>
+</body>
+</html>
