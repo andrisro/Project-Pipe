@@ -16,6 +16,8 @@ import {LocationComponent} from './components/location/location.component';
 import {CookieService} from 'ngx-cookie-service';
 import {InitComponent} from './components/init/init.component';
 import {LogoutComponent} from './components/logout/logout.component';
+import { RecaptchaModule} from 'ng-recaptcha';
+import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import {LogoutComponent} from './components/logout/logout.component';
     AppRoutingModule,
     MaterialModule,
     FormsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    RecaptchaModule,
+    RecaptchaFormsModule
   ],
   providers: [
     CookieService

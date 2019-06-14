@@ -1,27 +1,53 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ApiService} from '../../common/services/api.service';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonToggleModule} from '@angular/material';
-import {UserLoginDTO} from "../../common/dto/UserLoginDTO";
-import {UserPasswordDTO} from "../../common/dto/UserPasswordDTO";
-import {UserRegistrationDTO} from "../../common/dto/UserRegistrationDTO";
-import {UserRegistrationEmailDTO} from "../../common/dto/UserRegistrationEmailDTO";
+import {UserLoginDTO} from '../../common/dto/UserLoginDTO';
+import {UserPasswordDTO} from '../../common/dto/UserPasswordDTO';
+import {UserRegistrationDTO} from '../../common/dto/UserRegistrationDTO';
+import {UserRegistrationEmailDTO} from '../../common/dto/UserRegistrationEmailDTO';
+import {Subscription} from 'rxjs';
+import {SubjectService} from '../../common/services/subject.service';
+
+export interface FormModel {
+  captcha?: string;
+}
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent {
+export class RegistrationComponent implements OnInit, OnDestroy {
   title = 'registration';
   public user: User;
+  public formModel: FormModel = {};
+  private checkLoginNameSubscription: Subscription;
+  checkLogin:boolean = true;
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private subjectService: SubjectService) {
     this.user = new User();
+  }
+
+  ngOnInit() {
+    this.subscribeCheckLoginName();
+    this.checkLogin = true;
+  }
+
+  ngOnDestroy() {
+    this.checkLoginNameSubscription.unsubscribe();
   }
 
   testCall() {
     console.log('registration');
+  }
+
+  subscribeCheckLoginName() {
+    this.checkLoginNameSubscription = this.subjectService.checkLoginNameSubject.subscribe((data) => {
+      console.log('hab die daten hier ' + JSON.stringify(data));
+      this.checkLogin = data.ergebnis;
+      }
+    );
   }
 
   registration() {
@@ -38,6 +64,8 @@ export class RegistrationComponent {
     userRegistrationDto.telefon = this.user.telephone;
     userRegistrationDto.email = new UserRegistrationEmailDTO();
     userRegistrationDto.email.adresse = this.user.email;
+
+    this.apiService.checkLoginName(userRegistrationDto.loginName);
 
     console.log('Log: ');
     console.log(JSON.stringify(userRegistrationDto));

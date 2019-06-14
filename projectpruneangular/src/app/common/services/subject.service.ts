@@ -6,6 +6,8 @@ import {UserDataDTO} from '../dto/UserDataDTO';
 import {GetStandortDTO} from '../dto/GetStandortDTO';
 import {UserRegistrationEmailDTO} from '../dto/UserRegistrationEmailDTO';
 import {UserRegistrationDTO} from '../dto/UserRegistrationDTO';
+import {CheckLoginNameDTO} from "../dto/CheckLoginNameDTO";
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,4 +21,6 @@ export class SubjectService {
   public readonly userStandortSubject = new Subject<GetStandortDTO>();
   public readonly userRegisteredSubject = new Subject<UserRegistrationDTO>();
   public readonly userLoggedOut = new Subject();
+
+  public readonly checkLoginNameSubject = new Subject<CheckLoginNameDTO>();
 }
