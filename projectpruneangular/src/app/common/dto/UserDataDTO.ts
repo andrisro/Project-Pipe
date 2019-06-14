@@ -4,6 +4,6 @@ export class UserDataDTO {
   benutzerliste: UserListDTO[];
 
   constructor() {
-    this.benutzerliste = null;
+    this.benutzerliste = [];
   }
 }

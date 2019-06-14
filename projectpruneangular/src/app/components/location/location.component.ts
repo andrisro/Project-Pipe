@@ -9,7 +9,9 @@ import {} from 'googlemaps';
 import {UserCookieService} from '../../common/services/usercookie.service';
 import {forEach} from '@angular/router/src/utils/collection';
 import {UserListDTO} from '../../common/dto/UserListDTO';
-import {MatExpansionModule} from '@angular/material';
+import {MatExpansionModule, MatTableDataSource} from '@angular/material';
+import {UserDataDTO} from '../../common/dto/UserDataDTO';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 @Component({
   selector: 'app-location',
@@ -24,11 +26,18 @@ export class LocationComponent implements OnInit, OnDestroy {
   private userSession: UserSessionDTO;
   private locationFormData: LocationFormData;
   private geolocationPosition: Position;
+  public dataSource = new MatTableDataSource<UserListDTO>();
+  private friendsEnabledList = new UserDataDTO();
+  // users: UserDataDTO = null;
 
   successMessageSetLocation = false;
 
   @ViewChild('gmap') gmapElement: any;
   map: google.maps.Map;
+
+  @ViewChild('gmapfriends') gmapElementFriends: any;
+  mapFriends: google.maps.Map;
+  displayedColumns = ['name', 'checkbox'];
 
 
   constructor(private subjectService: SubjectService, private apiService: ApiService, private userCookieService: UserCookieService) {
@@ -48,6 +57,7 @@ export class LocationComponent implements OnInit, OnDestroy {
 
     this.getUserActionFinished = this.subjectService.allUsersSubject.subscribe((data) => {
       data.benutzerliste.forEach((user) => {
+        this.dataSource.data = data.benutzerliste;
         console.log('get standort all users' + JSON.stringify(user));
         this.getStandortOfUser(user);
       });
@@ -159,7 +169,7 @@ export class LocationComponent implements OnInit, OnDestroy {
     console.log('address ' + address);
 
     geocoder.geocode( { 'address' : address }, (results, status) => {
-      if(status == google.maps.GeocoderStatus.OK) {
+      if (status == google.maps.GeocoderStatus.OK) {
         console.log('ok');
 
         const setStandort = new SetStandortDTO();
@@ -183,6 +193,29 @@ export class LocationComponent implements OnInit, OnDestroy {
 
   resetSetLocationBool() {
     this.successMessageSetLocation = false;
+  }
+
+  public doFilter = (value: string) => {
+    this.dataSource.filter = value.trim().toLocaleLowerCase();
+  }
+
+  isFriendEnabled(element: any) {
+    this.friendsEnabledList.benutzerliste.forEach(item => {
+      if (element === item) {
+        return true;
+      }
+    });
+    return false;
+  }
+
+  enableFriend(element: any) {
+    const friendFound = this.isFriendEnabled(element);
+
+    if (!friendFound) {
+      this.friendsEnabledList.benutzerliste.push(element);
+    } else {
+      this.friendsEnabledList.benutzerliste.splice(this.friendsEnabledList.benutzerliste.indexOf(element), 1 );
+    }
   }
 }
 

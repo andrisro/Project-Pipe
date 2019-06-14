@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy, OnChanges {
   title = 'login';
   private loginActionFinished: Subscription;
   private wrongLoginSubject: Subscription;
-  wrongLogin:boolean = false; 
+  wrongLogin = false;
 
   constructor(private apiService: ApiService, private subjectService: SubjectService) {
     this.user = new User();
@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   isUsernameValid(): boolean {
-    this.apiService.checkLoginName(this.user.loginName);
+    // this.apiService.checkLoginName(this.user.loginName);
 
     return false;
   }

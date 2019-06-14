@@ -15,7 +15,7 @@
           <input matInput placeholder="Ort" [(ngModel)]="locationFormData.city" name="city" value="">
         </mat-form-field>
         <mat-form-field class="location-form-width">
-                    <input matInput placeholder="Land" [(ngModel)]="locationFormData.country" name="country" value="">
+          <input matInput placeholder="Land" [(ngModel)]="locationFormData.country" name="country" value="">
         </mat-form-field>
 
         <button mat-raised-button (click)="setStandortByFormData()">Standort setzen</button>
@@ -24,14 +24,50 @@
       </form>
     </mat-panel-description>
   </mat-expansion-panel>
-  <mat-expansion-panel [expanded]="true" hideToggle>
+  <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <mat-icon>map</mat-icon> Standorte
+        <mat-icon>map</mat-icon>
+        Standorte deiner Freunde
       </mat-panel-title>
     </mat-expansion-panel-header>
     <mat-panel-description>
-      <div #gmap style="width:100%;height:600px" ></div>
+      <div *ngIf="dataSource.data!=null">
+        <div fxLayout fxLayoutAlign="center center">
+          <mat-form-field fxFlex="40%">
+            <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
+          </mat-form-field>
+        </div>
+        <table mat-table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="name" >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Deine Freunde</th>
+            <td mat-cell *matCellDef="let element">{{element.vorname}} {{element.nachname}}</td>
+          </ng-container>
+          <ng-container matColumnDef="checkbox">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <mat-checkbox
+                class="friends-table-checkbox" (click)="enableFriend(element)" [checked]="isFriendEnabled(element)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </mat-panel-description>
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="true" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>map</mat-icon>
+        Alle Standorte
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-panel-description>
+      <div #gmap style="width:100%;height:600px"></div>
     </mat-panel-description>
   </mat-expansion-panel>
 </mat-accordion>
