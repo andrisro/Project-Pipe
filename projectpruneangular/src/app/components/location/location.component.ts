@@ -12,6 +12,7 @@ import {UserListDTO} from '../../common/dto/UserListDTO';
 import {MatExpansionModule, MatTableDataSource} from '@angular/material';
 import {UserDataDTO} from '../../common/dto/UserDataDTO';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {Marker} from "@agm/core/services/google-maps-types";
 
 @Component({
   selector: 'app-location',
@@ -28,6 +29,7 @@ export class LocationComponent implements OnInit, OnDestroy {
   private geolocationPosition: Position;
   public dataSource = new MatTableDataSource<UserListDTO>();
   private friendsEnabledList = new UserDataDTO();
+  private markers: Array<google.maps.Marker> = [];
   // users: UserDataDTO = null;
 
   successMessageSetLocation = false;
@@ -155,6 +157,8 @@ export class LocationComponent implements OnInit, OnDestroy {
       map: this.map,
       title: 'Mein Standort'
     });
+
+    this.markers.push(marker);
   }
 
   ngOnDestroy() {
@@ -208,6 +212,19 @@ export class LocationComponent implements OnInit, OnDestroy {
     return false;
   }
 
+  private reloadMap() {
+    console.log("reload2");
+    this.markers.forEach((marker) => {
+      marker.setMap(null);
+    });
+
+    this.markers = [];
+
+    this.friendsEnabledList.benutzerliste.forEach(user => {
+      this.getStandortOfUser(user);
+    });
+  }
+
   enableFriend(element: any) {
     const friendFound = this.isFriendEnabled(element);
 
@@ -216,6 +233,9 @@ export class LocationComponent implements OnInit, OnDestroy {
     } else {
       this.friendsEnabledList.benutzerliste.splice(this.friendsEnabledList.benutzerliste.indexOf(element), 1 );
     }
+
+    this.reloadMap();
+
   }
 }
 
