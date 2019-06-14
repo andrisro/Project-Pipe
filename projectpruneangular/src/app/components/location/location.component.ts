@@ -5,14 +5,10 @@ import {UserSessionDTO} from '../../common/dto/UserSessionDTO';
 import {ApiService} from '../../common/services/api.service';
 import {SetStandortStandortDTO} from '../../common/dto/SetStandortStandortDTO';
 import {SetStandortDTO} from '../../common/dto/SetStandortDTO';
-import {} from 'googlemaps';
 import {UserCookieService} from '../../common/services/usercookie.service';
-import {forEach} from '@angular/router/src/utils/collection';
 import {UserListDTO} from '../../common/dto/UserListDTO';
-import {MatExpansionModule, MatTableDataSource} from '@angular/material';
+import {MatTableDataSource} from '@angular/material';
 import {UserDataDTO} from '../../common/dto/UserDataDTO';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {Marker} from "@agm/core/services/google-maps-types";
 
 @Component({
   selector: 'app-location',
@@ -30,18 +26,13 @@ export class LocationComponent implements OnInit, OnDestroy {
   public dataSource = new MatTableDataSource<UserListDTO>();
   private friendsEnabledList = new UserDataDTO();
   private markers: Array<google.maps.Marker> = [];
-  // users: UserDataDTO = null;
 
   successMessageSetLocation = false;
 
   @ViewChild('gmap') gmapElement: any;
   map: google.maps.Map;
 
-  @ViewChild('gmapfriends') gmapElementFriends: any;
-  mapFriends: google.maps.Map;
   displayedColumns = ['name', 'lastname', 'checkbox'];
-  private checkboxesInited:boolean = false;
-
 
   constructor(private subjectService: SubjectService, private apiService: ApiService, private userCookieService: UserCookieService) {
     this.locationFormData = new LocationFormData();
@@ -123,7 +114,6 @@ export class LocationComponent implements OnInit, OnDestroy {
     });
 
     this.getUserStandortActionFinished = this.subjectService.userStandortSubject.subscribe((data) => {
-      // setPositionWithoutInfo
       const pos = {
         lat: data.breitengrad,
         lng: data.laengengrad
@@ -144,16 +134,7 @@ export class LocationComponent implements OnInit, OnDestroy {
     };
 
     console.log('add marker');
-    console.warn('disabled browser standort marker ');
-    // this.setPositionWithoutInfo(pos);
-
-    // const infoWindow = new google.maps.InfoWindow;
-    //
-    // infoWindow.setPosition(pos);
-    // infoWindow.setContent('Location found.');
-    // infoWindow.open(this.map);
     this.map.setCenter(pos);
-
   }
 
   setPositionWithoutInfo(pos) {
@@ -177,7 +158,7 @@ export class LocationComponent implements OnInit, OnDestroy {
 
     console.log('address ' + address);
 
-    geocoder.geocode( { 'address' : address }, (results, status) => {
+    geocoder.geocode({'address': address}, (results, status) => {
       if (status == google.maps.GeocoderStatus.OK) {
         console.log('ok');
 
@@ -198,7 +179,7 @@ export class LocationComponent implements OnInit, OnDestroy {
         this.reloadMap();
         this.successMessageSetLocation = true;
       }
-    } );
+    });
   }
 
   resetSetLocationBool() {
@@ -207,7 +188,7 @@ export class LocationComponent implements OnInit, OnDestroy {
 
   public filterFriendsTable = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
-  }
+  };
 
 
   private reloadMap() {
@@ -223,14 +204,6 @@ export class LocationComponent implements OnInit, OnDestroy {
     });
   }
 
-  isFriendEnabledGUI(element: any) {
-    if(this.isFriendEnabled(element)) {
-      return 'checked';
-    } else {
-      return 'unchecked';
-    }
-  }
-
   isFriendEnabled(element: any) {
     let enabled = false;
     this.friendsEnabledList.benutzerliste.forEach(item => {
@@ -239,7 +212,6 @@ export class LocationComponent implements OnInit, OnDestroy {
       }
     });
 
-    console.log("enabled "+enabled);
     return enabled;
   }
 
@@ -250,7 +222,7 @@ export class LocationComponent implements OnInit, OnDestroy {
     if (!friendFound) {
       this.friendsEnabledList.benutzerliste.push(element);
     } else {
-      this.friendsEnabledList.benutzerliste.splice(this.friendsEnabledList.benutzerliste.indexOf(element), 1 );
+      this.friendsEnabledList.benutzerliste.splice(this.friendsEnabledList.benutzerliste.indexOf(element), 1);
     }
 
     this.reloadMap();
@@ -269,5 +241,3 @@ export class LocationFormData {
     this.country = '';
   }
 }
-
-
