@@ -38,7 +38,7 @@
           <div *ngIf="dataSource.data!=null">
             <div fxLayout fxLayoutAlign="center center">
               <mat-form-field fxFlex="40%">
-                <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
+                <input matInput type="text" (keyup)="filterFriendsTable($event.target.value)" placeholder="Filter">
               </mat-form-field>
             </div>
             <table mat-table [dataSource]="dataSource" matSort>

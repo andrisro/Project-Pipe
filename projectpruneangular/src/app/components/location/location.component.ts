@@ -51,53 +51,21 @@ export class LocationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loginActionFinished = this.subjectService.loginFinishedSubject.subscribe((data) => {
-        this.userSession = data;
-        this.apiService.getAllUsers(this.userSession);
-      }
-    );
-
-    this.getUserActionFinished = this.subjectService.allUsersSubject.subscribe((data) => {
-      data.benutzerliste.forEach((user) => {
-        this.dataSource.data = data.benutzerliste;
-        console.log('get standort all users' + JSON.stringify(user));
-        this.getStandortOfUser(user);
-      });
-    });
-
-    this.getUserStandortActionFinished = this.subjectService.userStandortSubject.subscribe((data) => {
-      // setPositionWithoutInfo
-      const pos = {
-        lat: data.breitengrad,
-        lng: data.laengengrad
-      };
-
-      this.setPositionWithoutInfo(pos);
-      console.log('got standort ' + data);
-    });
-
-
-    const myLatLng = {lat: -25.363, lng: 131.044};
-
-    const mapProp = {
-      center: myLatLng,
-      zoom: 4,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-
-
-    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
-
+    this.initSubscriptions();
+    this.initMap();
 
     this.apiService.getActiveSession();
+    this.setCurrentLocationByBrowserLocation();
+  }
 
+  private setCurrentLocationByBrowserLocation() {
     if (window.navigator && window.navigator.geolocation) {
       window.navigator.geolocation.getCurrentPosition(
         position => {
           this.geolocationPosition = position;
           console.log(position);
 
-          this.setPosition(position);
+          this.setMapPositionMarker(position);
 
           const setStandortDto = new SetStandortDTO();
           setStandortDto.sitzung = this.userSession.sessionID;
@@ -125,12 +93,47 @@ export class LocationComponent implements OnInit, OnDestroy {
     }
   }
 
-  setMapType(mapTypeId: string) {
-    console.log('set map type ' + mapTypeId);
-    this.map.setMapTypeId(mapTypeId);
+  private initMap() {
+    const myLatLng = {lat: -25.363, lng: 131.044};
+
+    const mapProp = {
+      center: myLatLng,
+      zoom: 4,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+
+    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
   }
 
-  setPosition(data: Position) {
+  private initSubscriptions() {
+    this.loginActionFinished = this.subjectService.loginFinishedSubject.subscribe((data) => {
+        this.userSession = data;
+        this.apiService.getAllUsers(this.userSession);
+      }
+    );
+
+    this.getUserActionFinished = this.subjectService.allUsersSubject.subscribe((data) => {
+      data.benutzerliste.forEach((user) => {
+        this.dataSource.data = data.benutzerliste;
+        console.log('get standort all users' + JSON.stringify(user));
+        this.getStandortOfUser(user);
+      });
+    });
+
+    this.getUserStandortActionFinished = this.subjectService.userStandortSubject.subscribe((data) => {
+      // setPositionWithoutInfo
+      const pos = {
+        lat: data.breitengrad,
+        lng: data.laengengrad
+      };
+
+      this.setPositionWithoutInfo(pos);
+      console.log('got standort ' + data);
+    });
+  }
+
+  setMapPositionMarker(data: Position) {
     console.log('set position');
     console.log(JSON.stringify(data));
 
@@ -199,18 +202,10 @@ export class LocationComponent implements OnInit, OnDestroy {
     this.successMessageSetLocation = false;
   }
 
-  public doFilter = (value: string) => {
+  public filterFriendsTable = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
-  isFriendEnabled(element: any) {
-    this.friendsEnabledList.benutzerliste.forEach(item => {
-      if (element === item) {
-        return true;
-      }
-    });
-    return false;
-  }
 
   private reloadMap() {
     console.log("reload2");
@@ -223,6 +218,15 @@ export class LocationComponent implements OnInit, OnDestroy {
     this.friendsEnabledList.benutzerliste.forEach(user => {
       this.getStandortOfUser(user);
     });
+  }
+
+  isFriendEnabled(element: any) {
+    this.friendsEnabledList.benutzerliste.forEach(item => {
+      if (element === item) {
+        return true;
+      }
+    });
+    return false;
   }
 
   enableFriend(element: any) {
