@@ -1,25 +1,6 @@
 <h2>Registrierung</h2>
 
 <form class="registration-form"  #captchaProtectedForm="ngForm">
-
-  <label class="registration-label-divider">Basisdaten</label>
-
-  <mat-form-field class="registration-full-width">
-    <input matInput placeholder="UserName" name="userName" [(ngModel)]="user.loginName" value="">
-  </mat-form-field>
-
-  <mat-form-field class="registration-full-width">
-    <input matInput type="password" name="password" [(ngModel)]="user.password" placeholder="Passwort" value = "">
-  </mat-form-field>
-
-  <mat-form-field class="registration-full-width">
-    <input matInput type="password" name="passwordConfirmation"[(ngModel)]="user.passwordConfirmation" placeholder="Passwort bestätigen" value = "">
-  </mat-form-field>
-
-  <mat-error *ngIf="!isPasswordConfirmationValid()">Die Passwörter müssen übereinstimmen.</mat-error>
-  <mat-error *ngIf="!isPasswordSecurityLevelValid()">Die Passwörter müssen mindestens 8 Zeichen lang sein und Großbuchstaben, sowie Sonderzeichen enthalten.</mat-error>
-
-
   <label class="registration-label-divider">Persönliche Daten</label>
 
   <mat-form-field class="registration-float-width">
@@ -50,26 +31,44 @@
     <input matInput placeholder="Telefon" name="telephone" [(ngModel)]="user.telephone" value="">
   </mat-form-field>
 
-  <re-captcha
-    [(ngModel)]="formModel.captcha"
-    name="captcha"
-    required
-    siteKey="6LdAf6YUAAAAAJGjRhexi2Tk337uzPhvW9IhOAi-"
-    #captchaControl="ngModel"
-  >
-  </re-captcha>
-  <div [hidden]="captchaControl.valid || captchaControl.pristine" class="error">Captcha must be solved</div>
-  <div [hidden]="!captchaControl.valid" class="success">Captcha is valid</div>
-  <div [hidden]="captchaProtectedForm.form.valid" class="error">The form must be filled out</div>
-  <div [hidden]="!captchaProtectedForm.form.valid" class="success">The form is valid</div>
-  <button (click)="formModel.captcha = ''">Reset Captcha</button>
+  <mat-form-field class="registration-float-width">
+    <input matInput placeholder="E-Mail" name="email" [(ngModel)]="user.email" value="" email>
+  </mat-form-field>
 
+  <label class="registration-label-divider">Login-Daten</label>
 
-  <div *ngIf="checkLogin == false" style="color:red; margin-top:1em;">
-    LogIn name already exists!<br />
-    <img style="margin-top: 1em; height:20em; width: 20em" src="https://media3.giphy.com/media/kyHUOat3LQkXS/giphy.gif?cid=790b76115cf0f93764444e314171a3f9&rid=giphy.gif" />
+  <mat-form-field class="registration-full-width">
+    <input matInput placeholder="UserName" name="userName" [(ngModel)]="user.loginName" value="">
+  </mat-form-field>
+
+  <mat-form-field class="registration-full-width">
+    <input matInput type="password" name="password" [(ngModel)]="user.password" placeholder="Passwort" value = "">
+  </mat-form-field>
+
+  <mat-form-field class="registration-full-width">
+    <input matInput type="password" name="passwordConfirmation"[(ngModel)]="user.passwordConfirmation" placeholder="Passwort bestätigen" value = "">
+  </mat-form-field>
+
+  <mat-progress-bar class="registration-full-width" mode="determinate" [value]="getSecurityLevelPassword()/4*100" [color]="getProgressBarColor(getSecurityLevelPassword())"></mat-progress-bar>
+
+  <div *ngIf="isNoFieldEmpty()">
+    <mat-error *ngIf="!isPasswordConfirmationValid()">Die Passwörter müssen übereinstimmen.</mat-error>
+    <mat-error *ngIf="getSecurityLevelPassword()<=1">Die Passwörter müssen mindestens 6 Zeichen lang sein und Großbuchstaben, sowie Sonderzeichen enthalten. Dein Vorname, Nachname oder Login-Name darf im Passwort nicht vorkommen.</mat-error>
   </div>
 
+  <mat-error *ngIf="checkLogin == false">
+    LogIn name already exists!<br />
+    <img style="margin-top: 1em; height:20em; width: 20em" src="https://media3.giphy.com/media/kyHUOat3LQkXS/giphy.gif?cid=790b76115cf0f93764444e314171a3f9&rid=giphy.gif" />
+  </mat-error>
 
-  <button mat-raised-button (click)="registration()">Registrieren</button>
+  <re-captcha class="registration-captcha" [(ngModel)]="formModel.captcha" name="captcha" required siteKey="6LdAf6YUAAAAAJGjRhexi2Tk337uzPhvW9IhOAi-" #captchaControl="ngModel"></re-captcha>
+
+  <div *ngIf="isNoFieldEmpty()">
+    <mat-error *ngIf="captchaControl.valid || captchaControl.pristine">Captcha must be solved</mat-error>
+    <mat-error [hidden]="!captchaControl.valid" class="success">Captcha is invalid</mat-error>
+  </div>
+
+  <mat-error *ngIf="!isNoFieldEmpty()">The form must be filled out</mat-error>
+
+  <button mat-raised-button [disabled]="getSecurityLevelPassword() <= 3 || !isPasswordConfirmationValid() ||!isNoFieldEmpty() || captchaControl.valid" (click)="registration()">Registrieren</button>
 </form>
