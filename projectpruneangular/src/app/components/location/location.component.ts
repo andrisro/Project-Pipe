@@ -40,6 +40,7 @@ export class LocationComponent implements OnInit, OnDestroy {
   @ViewChild('gmapfriends') gmapElementFriends: any;
   mapFriends: google.maps.Map;
   displayedColumns = ['name', 'checkbox'];
+  private checkboxesInited:boolean = false;
 
 
   constructor(private subjectService: SubjectService, private apiService: ApiService, private userCookieService: UserCookieService) {
@@ -52,10 +53,10 @@ export class LocationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initSubscriptions();
-    this.initMap();
-
     this.apiService.getActiveSession();
     this.setCurrentLocationByBrowserLocation();
+
+    this.initMap();
   }
 
   private setCurrentLocationByBrowserLocation() {
@@ -116,8 +117,8 @@ export class LocationComponent implements OnInit, OnDestroy {
     this.getUserActionFinished = this.subjectService.allUsersSubject.subscribe((data) => {
       data.benutzerliste.forEach((user) => {
         this.dataSource.data = data.benutzerliste;
-        console.log('get standort all users' + JSON.stringify(user));
-        this.getStandortOfUser(user);
+        this.friendsEnabledList = data;
+        this.reloadMap()
       });
     });
 
@@ -143,13 +144,14 @@ export class LocationComponent implements OnInit, OnDestroy {
     };
 
     console.log('add marker');
-    this.setPositionWithoutInfo(pos);
+    console.warn('disabled browser standort marker ');
+    // this.setPositionWithoutInfo(pos);
 
-    const infoWindow = new google.maps.InfoWindow;
-
-    infoWindow.setPosition(pos);
-    infoWindow.setContent('Location found.');
-    infoWindow.open(this.map);
+    // const infoWindow = new google.maps.InfoWindow;
+    //
+    // infoWindow.setPosition(pos);
+    // infoWindow.setContent('Location found.');
+    // infoWindow.open(this.map);
     this.map.setCenter(pos);
 
   }
@@ -191,8 +193,9 @@ export class LocationComponent implements OnInit, OnDestroy {
           lng: results[0].geometry.location.lng()
         };
 
-        this.setPositionWithoutInfo(pos);
+        // this.setPositionWithoutInfo(pos);
         this.apiService.setStandort(setStandort);
+        this.reloadMap();
         this.successMessageSetLocation = true;
       }
     } );
@@ -208,7 +211,7 @@ export class LocationComponent implements OnInit, OnDestroy {
 
 
   private reloadMap() {
-    console.log("reload2");
+    console.log('reload2');
     this.markers.forEach((marker) => {
       marker.setMap(null);
     });
@@ -220,16 +223,28 @@ export class LocationComponent implements OnInit, OnDestroy {
     });
   }
 
-  isFriendEnabled(element: any) {
-    this.friendsEnabledList.benutzerliste.forEach(item => {
-      if (element === item) {
-        return true;
-      }
-    });
-    return false;
+  isFriendEnabledGUI(element: any) {
+    if(this.isFriendEnabled(element)) {
+      return 'checked';
+    } else {
+      return 'unchecked';
+    }
   }
 
-  enableFriend(element: any) {
+  isFriendEnabled(element: any) {
+    let enabled = false;
+    this.friendsEnabledList.benutzerliste.forEach(item => {
+      if (element.loginName === item.loginName) {
+        enabled = true;
+      }
+    });
+
+    console.log("enabled "+enabled);
+    return enabled;
+  }
+
+  switchFriendEnablement(element: any) {
+    console.log('switch enablement ');
     const friendFound = this.isFriendEnabled(element);
 
     if (!friendFound) {

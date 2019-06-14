@@ -4,6 +4,7 @@ mat-icon {
 
 .headers-align {
   margin-top: 2em;
+  display: block;
 }
 
 .headers-align .mat-expansion-panel-header-title,

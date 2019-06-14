@@ -41,7 +41,7 @@
                 <input matInput type="text" (keyup)="filterFriendsTable($event.target.value)" placeholder="Filter">
               </mat-form-field>
             </div>
-            <table mat-table [dataSource]="dataSource" matSort>
+            <table mat-table class="friends-table-full-with" [dataSource]="dataSource" matSort>
               <ng-container matColumnDef="name" >
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Deine Freunde</th>
                 <td mat-cell *matCellDef="let element">{{element.vorname}} {{element.nachname}}</td>
@@ -50,8 +50,11 @@
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
                   <mat-checkbox
-                    class="friends-table-checkbox" (change)="enableFriend(element)" [checked]="isFriendEnabled(element)">
+                    class="friends-table-checkbox"  (click)="switchFriendEnablement(element)" checked="true" >
                   </mat-checkbox>
+<!--                  <mat-checkbox-->
+<!--                    class="friends-table-checkbox"  (click)="switchFriendEnablement(element)" value="1" [checked]="!isFriendEnabled(element)">-->
+<!--                  </mat-checkbox>-->
                 </td>
               </ng-container>
 
