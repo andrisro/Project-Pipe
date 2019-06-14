@@ -39,7 +39,7 @@ export class LocationComponent implements OnInit, OnDestroy {
 
   @ViewChild('gmapfriends') gmapElementFriends: any;
   mapFriends: google.maps.Map;
-  displayedColumns = ['name', 'checkbox'];
+  displayedColumns = ['name', 'lastname', 'checkbox'];
   private checkboxesInited:boolean = false;
 
 

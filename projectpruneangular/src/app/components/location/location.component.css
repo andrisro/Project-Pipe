@@ -31,3 +31,26 @@ mat-form-field {
   width: 100%;
 }
 
+
+.friends-table-checkbox {
+  margin-left: 1em;
+}
+
+table {
+  width: 100%;
+  display: block;
+}
+
+.mat-row {
+  height: auto;
+}
+
+.mat-cell {
+  padding: 8px 8px 8px 0;
+}
+
+.filter-field {
+  margin-left: 5em;
+  display: block;
+}
+
