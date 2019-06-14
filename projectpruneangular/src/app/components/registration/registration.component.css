@@ -1,9 +1,17 @@
 .registration-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
+}
+
+.registration-float-width {
+  margin-right: 1em;
+  width: calc(50% - 2em);
 }
 
 .registration-full-width {
+  width: calc(100% - 3em);
+}
+
+.registration-label-divider {
   width: 100%;
+  margin-bottom: 1em;
+  display: block;
 }

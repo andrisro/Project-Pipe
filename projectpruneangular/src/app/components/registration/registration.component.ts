@@ -71,11 +71,20 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     console.log(JSON.stringify(userRegistrationDto));
     this.apiService.register(userRegistrationDto);
   }
+
+  isPasswordConfirmationValid() {
+    return this.user.password === this.user.passwordConfirmation;
+  }
+
+  isPasswordSecurityLevelValid() {
+    return false;
+  }
 }
 
 export class User {
   loginName = '';
   password = '';
+  passwordConfirmation = '';
   lastName = '';
   firstName = '';
   street = '';

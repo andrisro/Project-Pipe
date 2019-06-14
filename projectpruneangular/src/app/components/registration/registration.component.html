@@ -1,44 +1,52 @@
 <h2>Registrierung</h2>
 
 <form class="registration-form"  #captchaProtectedForm="ngForm">
-  <mat-form-field class="registration-full-width">
-    <input matInput placeholder="Name" name="lastName" [(ngModel)]="user.lastName" value="">
-  </mat-form-field>
 
-  <mat-form-field class="registration-full-width">
-    <input matInput placeholder="Vorname" name="firstName" [(ngModel)]="user.firstName" value="">
-  </mat-form-field>
+  <label class="registration-label-divider">Basisdaten</label>
 
   <mat-form-field class="registration-full-width">
     <input matInput placeholder="UserName" name="userName" [(ngModel)]="user.loginName" value="">
   </mat-form-field>
 
-  <div *ngIf="checkLogin == false" style="color:red; margin-top:1em;">
-    LogIn name already exists!<br />
-    <img style="margin-top: 1em; height:20em; width: 20em" src="https://media3.giphy.com/media/kyHUOat3LQkXS/giphy.gif?cid=790b76115cf0f93764444e314171a3f9&rid=giphy.gif" />
-  </div>
-
   <mat-form-field class="registration-full-width">
-    <input matInput type="password" name="password" [(ngModel)]="user.password" placeholder="Passwort">
+    <input matInput type="password" name="password" [(ngModel)]="user.password" placeholder="Passwort" value = "">
   </mat-form-field>
 
   <mat-form-field class="registration-full-width">
+    <input matInput type="password" name="passwordConfirmation"[(ngModel)]="user.passwordConfirmation" placeholder="Passwort bestätigen" value = "">
+  </mat-form-field>
+
+  <mat-error *ngIf="!isPasswordConfirmationValid()">Die Passwörter müssen übereinstimmen.</mat-error>
+  <mat-error *ngIf="!isPasswordSecurityLevelValid()">Die Passwörter müssen mindestens 8 Zeichen lang sein und Großbuchstaben, sowie Sonderzeichen enthalten.</mat-error>
+
+
+  <label class="registration-label-divider">Persönliche Daten</label>
+
+  <mat-form-field class="registration-float-width">
+    <input matInput placeholder="Name" name="lastName" [(ngModel)]="user.lastName" value="">
+  </mat-form-field>
+
+  <mat-form-field class="registration-float-width">
+    <input matInput placeholder="Vorname" name="firstName" [(ngModel)]="user.firstName" value="">
+  </mat-form-field>
+
+  <mat-form-field class="registration-float-width">
     <input matInput placeholder="PLZ" name="zip" [(ngModel)]="user.zip" value="">
   </mat-form-field>
 
-  <mat-form-field class="registration-full-width">
+  <mat-form-field class="registration-float-width">
     <input matInput placeholder="Ort" name="city" [(ngModel)]="user.city" value="">
   </mat-form-field>
 
-  <mat-form-field class="registration-full-width">
+  <mat-form-field class="registration-float-width">
     <input matInput placeholder="Straße" name="street" [(ngModel)]="user.street" value="">
   </mat-form-field>
 
-  <mat-form-field class="registration-full-width">
+  <mat-form-field class="registration-float-width">
     <input matInput placeholder="Land" name="country" [(ngModel)]="user.country" value="">
   </mat-form-field>
 
-  <mat-form-field class="registration-full-width">
+  <mat-form-field class="registration-float-width">
     <input matInput placeholder="Telefon" name="telephone" [(ngModel)]="user.telephone" value="">
   </mat-form-field>
 
@@ -57,5 +65,11 @@
   <button (click)="formModel.captcha = ''">Reset Captcha</button>
 
 
-<button mat-raised-button (click)="registration()">Registrieren</button>
+  <div *ngIf="checkLogin == false" style="color:red; margin-top:1em;">
+    LogIn name already exists!<br />
+    <img style="margin-top: 1em; height:20em; width: 20em" src="https://media3.giphy.com/media/kyHUOat3LQkXS/giphy.gif?cid=790b76115cf0f93764444e314171a3f9&rid=giphy.gif" />
+  </div>
+
+
+  <button mat-raised-button (click)="registration()">Registrieren</button>
 </form>
