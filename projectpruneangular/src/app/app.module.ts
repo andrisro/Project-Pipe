@@ -10,7 +10,13 @@ import {MaterialModule} from './material.module';
 import {RegistrationComponent} from './components/registration/registration.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HeaderComponent} from './components/header/header.component';
-import {MatCheckboxModule, MatExpansionModule, MatNativeDateModule, MatProgressBarModule} from '@angular/material';
+import {
+  MatCheckboxModule,
+  MatExpansionModule,
+  MatNativeDateModule,
+  MatProgressBarModule,
+  MatTabsModule
+} from '@angular/material';
 import {ProfileComponent} from './components/profile/profile.component';
 import {LocationComponent} from './components/location/location.component';
 import {CookieService} from 'ngx-cookie-service';
@@ -42,7 +48,8 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
     RecaptchaModule,
     RecaptchaFormsModule,
     MatProgressBarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTabsModule
   ],
   providers: [
     CookieService

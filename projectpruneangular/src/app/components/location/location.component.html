@@ -32,31 +32,39 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <mat-panel-description>
-      <div *ngIf="dataSource.data!=null">
-        <div fxLayout fxLayoutAlign="center center">
-          <mat-form-field fxFlex="40%">
-            <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
-          </mat-form-field>
-        </div>
-        <table mat-table [dataSource]="dataSource" matSort>
-          <ng-container matColumnDef="name" >
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Deine Freunde</th>
-            <td mat-cell *matCellDef="let element">{{element.vorname}} {{element.nachname}}</td>
-          </ng-container>
-          <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element">
-              <mat-checkbox
-                class="friends-table-checkbox" (click)="enableFriend(element)" [checked]="isFriendEnabled(element)">
-              </mat-checkbox>
-            </td>
-          </ng-container>
+      <mat-tab-group>
+        <mat-tab label="Freunde auswählen">
+          <!-- Friends Selector-->
+          <div *ngIf="dataSource.data!=null">
+            <div fxLayout fxLayoutAlign="center center">
+              <mat-form-field fxFlex="40%">
+                <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
+              </mat-form-field>
+            </div>
+            <table mat-table [dataSource]="dataSource" matSort>
+              <ng-container matColumnDef="name" >
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Deine Freunde</th>
+                <td mat-cell *matCellDef="let element">{{element.vorname}} {{element.nachname}}</td>
+              </ng-container>
+              <ng-container matColumnDef="checkbox">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-checkbox
+                    class="friends-table-checkbox" (click)="enableFriend(element)" [checked]="isFriendEnabled(element)">
+                  </mat-checkbox>
+                </td>
+              </ng-container>
 
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      </div>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+        </mat-tab>
+        <mat-tab label="Map ansehen">
+          Map
+        </mat-tab>
+      </mat-tab-group>
     </mat-panel-description>
   </mat-expansion-panel>
   <mat-expansion-panel [expanded]="true" hideToggle>
