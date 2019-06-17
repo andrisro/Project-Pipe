@@ -8,13 +8,16 @@
     <mat-panel-description>
       <form class="location-form">
         <p class="location-form-width">Dein Standort wird standardmäßig automatisch gesetzt. Hier kannst du ihn auch manuell setzen.</p>
-        <mat-form-field class="location-form-width">
+        <mat-form-field class="location-form-width" appearance="outline">
+          <mat-label>Straße & Hausnummer</mat-label>
           <input matInput placeholder="Straße & Hausnummer" [(ngModel)]="locationFormData.streetAndHouseNumber" name="streetAndHouseNumber" value="">
         </mat-form-field>
-        <mat-form-field class="location-form-width">
+        <mat-form-field class="location-form-width" appearance="outline">
+          <mat-label>Ort</mat-label>
           <input matInput placeholder="Ort" [(ngModel)]="locationFormData.city" name="city" value="">
         </mat-form-field>
-        <mat-form-field class="location-form-width">
+        <mat-form-field class="location-form-width" appearance="outline">
+          <mat-label>Land</mat-label>
           <input matInput placeholder="Land" [(ngModel)]="locationFormData.country" name="country" value="">
         </mat-form-field>
 
@@ -33,26 +36,36 @@
     </mat-expansion-panel-header>
     <mat-panel-description>
         <!-- Friends Selector-->
-        <div *ngIf="dataSource.data!=null">
+        <div *ngIf="dataSource.data!=null" style="width: 100%">
           <div class="friends-table-full-with">
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Filter</mat-label>
               <input matInput type="text" (keyup)="filterFriendsTable($event.target.value)" placeholder="Filter">
+              <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
           </div>
-          <table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>
+          <table mat-table class="mat-elevation-z15" [dataSource]="dataSource" matSort>
+<!--            <ng-container matColumnDef="profilePicture">-->
+<!--              <th mat-header-cell *matHeaderCellDef>Profile Pic</th>-->
+<!--              <td mat-cell *ngCellDef="let element">{{getProfilePicture(element)}}</td>-->
+<!--            </ng-container>-->
+            <ng-container matColumnDef="profilePicture">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+              <td mat-cell *matCellDef="let element" class="mat-cell-short-width" ><img [src]="getProfilePicture(element)" height="75em" /></td>
+            </ng-container>
             <ng-container matColumnDef="name" >
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Vorname</th>
-              <td mat-cell *matCellDef="let element">{{element.vorname}}</td>
+              <td mat-cell *matCellDef="let element" class="mat-cell-long-width" >{{element.vorname}}</td>
             </ng-container>
             <ng-container matColumnDef="lastname" >
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Nachname</th>
-              <td mat-cell *matCellDef="let element">{{element.nachname}}</td>
+              <td mat-cell *matCellDef="let element" class="mat-cell-long-width" >{{element.nachname}}</td>
             </ng-container>
             <ng-container matColumnDef="checkbox">
               <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let element">
+              <td mat-cell *matCellDef="let element" class="mat-cell-short-width" >
                 <mat-checkbox
-                  class="friends-table-checkbox"  (click)="switchFriendEnablement(element)" checked="true" >
+                  color="primary" class="friends-table-checkbox"  (click)="switchFriendEnablement(element)" checked="true" >
                 </mat-checkbox>
 <!--                  <mat-checkbox-->
 <!--                    class="friends-table-checkbox"  (click)="switchFriendEnablement(element)" value="1" [checked]="!isFriendEnabled(element)">-->
@@ -67,7 +80,7 @@
         </div>
     </mat-panel-description>
   </mat-expansion-panel>
-  <mat-expansion-panel [expanded]="true" hideToggle>
+  <mat-expansion-panel [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
         <mat-icon>map</mat-icon>

@@ -27,13 +27,14 @@ export class LocationComponent implements OnInit, OnDestroy {
   public dataSource = new MatTableDataSource<UserListDTO>();
   private friendsEnabledList = new UserDataDTO();
   private markers: Array<google.maps.Marker> = [];
+  private pPic = 1;
 
   successMessageSetLocation = false;
 
   @ViewChild('gmap') gmapElement: any;
   map: google.maps.Map;
 
-  displayedColumns = ['name', 'lastname', 'checkbox'];
+  displayedColumns = ['profilePicture', 'name', 'lastname', 'checkbox'];
 
   constructor(private subjectService: SubjectService, private apiService: ApiService, private userCookieService: UserCookieService) {
     this.locationFormData = new LocationFormData();
@@ -110,7 +111,7 @@ export class LocationComponent implements OnInit, OnDestroy {
       data.benutzerliste.forEach((user) => {
         this.dataSource.data = data.benutzerliste;
         this.friendsEnabledList = data;
-        this.reloadMap()
+        this.reloadMap();
       });
     });
 
@@ -189,7 +190,7 @@ export class LocationComponent implements OnInit, OnDestroy {
 
   public filterFriendsTable = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
-  };
+  }
 
 
   private reloadMap() {
@@ -228,6 +229,16 @@ export class LocationComponent implements OnInit, OnDestroy {
 
     this.reloadMap();
 
+  }
+
+  getProfilePicture(element: any) {
+    // tslint:disable-next-line:triple-equals
+    console.log("get pic");
+    if ((this.pPic % 2) === 0) {
+      return 'https://randomuser.me/api/portraits/men/' + this.pPic + '.jpg';
+    } else {
+      return 'https://randomuser.me/api/portraits/women/' + this.pPic + '.jpg';
+    }
   }
 }
 

@@ -34,11 +34,7 @@ mat-form-field {
 
 .friends-table-checkbox {
   margin-left: 1em;
-}
-
-table {
-  width: 100%;
-  display: block;
+  text-align: center;
 }
 
 .mat-row {
@@ -54,3 +50,11 @@ table {
   display: block;
 }
 
+
+.mat-cell-long-width {
+  min-width: 20em;
+}
+
+.mat-cell-short-width {
+  min-width: 7em;
+}
