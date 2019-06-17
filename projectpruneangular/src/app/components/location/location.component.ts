@@ -9,6 +9,7 @@ import {UserCookieService} from '../../common/services/usercookie.service';
 import {UserListDTO} from '../../common/dto/UserListDTO';
 import {MatTableDataSource} from '@angular/material';
 import {UserDataDTO} from '../../common/dto/UserDataDTO';
+import {} from 'googlemaps';
 
 @Component({
   selector: 'app-location',

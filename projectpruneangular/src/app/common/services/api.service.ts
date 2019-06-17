@@ -15,6 +15,7 @@ import {UserListDTO} from '../dto/UserListDTO';
 import {User} from '../../components/login/login.component';
 import {GetStandortDTO} from '../dto/GetStandortDTO';
 import {CheckLoginNameDTO} from "../dto/CheckLoginNameDTO";
+import {CheckLoginNameResponseDTO} from "../dto/CheckLoginNameResponseDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,7 @@ export class ApiService {
   public checkLoginName(loginName: string) {
     const url = this.apiPath + this.checkLoginNamePath + '?id=' + loginName;
     //
-    const req = this.http.get<CheckLoginNameResponseDTO>z(url).subscribe((res) => {
+    const req = this.http.get<CheckLoginNameResponseDTO>(url).subscribe((res) => {
        const dto = new CheckLoginNameDTO();
        dto.loginName = loginName;
        dto.ergebnis = res.ergebnis;
