@@ -8,6 +8,7 @@ import {UserRegistrationDTO} from '../../common/dto/UserRegistrationDTO';
 import {UserRegistrationEmailDTO} from '../../common/dto/UserRegistrationEmailDTO';
 import {Subscription} from 'rxjs';
 import {SubjectService} from '../../common/services/subject.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 export interface FormModel {
   captcha?: string;
@@ -25,7 +26,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   private checkLoginNameSubscription: Subscription;
   checkLogin = true;
 
-  constructor(private apiService: ApiService, private subjectService: SubjectService) {
+  constructor(private apiService: ApiService,
+              private subjectService: SubjectService) {
     this.user = new User();
   }
 
@@ -145,6 +147,10 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     console.log(this.user.telephone.length);
 
     return ((this.user.password.length > 1) && (this.user.passwordConfirmation.length > 1) && (this.user.loginName.length > 1) && (this.user.city.length > 1) && (this.user.country.length > 1) && (this.user.email.length > 1) && (this.user.street.length > 1) && (this.user.telephone.length > 1) && (this.user.zip.length > 1));
+  }
+
+  isAdressFormFilledOut() {
+    return ((this.user.city.length > 1) && (this.user.country.length > 1) && (this.user.email.length > 1) && (this.user.street.length > 1) && (this.user.telephone.length > 1) && (this.user.zip.length > 1));
   }
 }
 

@@ -1,92 +1,104 @@
 <div class="main-div">
-    <form class="registration-form"  #captchaProtectedForm="ngForm">
-      <mat-card>
-        <mat-card-content>
-            <label class="registration-label-divider">Persönliche Daten</label>
+  <form #captchaProtectedForm="ngForm" class="registration-form">
+    <mat-card>
+      <mat-card-content>
+        <mat-horizontal-stepper #stepper>
+          <mat-step>
+            <ng-template matStepLabel>Gib deine persönlichen Daten ein</ng-template>
 
-            <mat-form-field class="registration-float-width" appearance="outline">
+            <mat-form-field appearance="outline" class="registration-float-width">
               <mat-label>Nachname</mat-label>
-              <input matInput placeholder="Nachname" name="lastName" [(ngModel)]="user.lastName" value="">
+              <input [(ngModel)]="user.lastName" matInput name="lastName" placeholder="Nachname" value="">
               <mat-icon matSuffix>person</mat-icon>
             </mat-form-field>
 
-            <mat-form-field class="registration-float-width" appearance="outline">
+            <mat-form-field appearance="outline" class="registration-float-width">
               <mat-label>Vorname</mat-label>
-              <input matInput placeholder="Vorname" name="firstName" [(ngModel)]="user.firstName" value="">
+              <input [(ngModel)]="user.firstName" matInput name="firstName" placeholder="Vorname" value="">
               <mat-icon matSuffix>person</mat-icon>
             </mat-form-field>
 
-
-
-            <mat-form-field class="registration-float-width" appearance="outline">
+            <mat-form-field appearance="outline" class="registration-float-width">
               <mat-label>Straße</mat-label>
-              <input matInput placeholder="Straße" name="street" [(ngModel)]="user.street" value="">
+              <input [(ngModel)]="user.street" matInput name="street" placeholder="Straße" value="">
               <mat-icon matSuffix>home</mat-icon>
             </mat-form-field>
 
-            <mat-form-field class="registration-float-width" appearance="outline">
+            <mat-form-field appearance="outline" class="registration-float-width">
               <mat-label>Postleitzahl</mat-label>
-              <input matInput placeholder="Postleitzahl" name="zip" [(ngModel)]="user.zip" value="">
+              <input [(ngModel)]="user.zip" matInput name="zip" placeholder="Postleitzahl" value="">
               <mat-icon matSuffix>location_city</mat-icon>
             </mat-form-field>
 
-            <mat-form-field class="registration-float-width" appearance="outline">
+            <mat-form-field appearance="outline" class="registration-float-width">
               <mat-label>Ort</mat-label>
-              <input matInput placeholder="Ort" name="city" [(ngModel)]="user.city" value="">
+              <input [(ngModel)]="user.city" matInput name="city" placeholder="Ort" value="">
               <mat-icon matSuffix>location_city</mat-icon>
             </mat-form-field>
 
-            <mat-form-field class="registration-float-width" appearance="outline">
+            <mat-form-field appearance="outline" class="registration-float-width">
               <mat-label>Land</mat-label>
-              <input matInput placeholder="Land" name="country" [(ngModel)]="user.country" value="">
+              <input [(ngModel)]="user.country" matInput name="country" placeholder="Land" value="">
               <mat-icon matSuffix>public</mat-icon>
             </mat-form-field>
 
-            <mat-form-field class="registration-float-width" appearance="outline">
+            <mat-form-field appearance="outline" class="registration-float-width">
               <mat-label>Telefon</mat-label>
-              <input matInput placeholder="Telefon" name="telephone" [(ngModel)]="user.telephone" value="">
+              <input [(ngModel)]="user.telephone" matInput name="telephone" placeholder="Telefon" value="">
               <mat-icon matSuffix>phone</mat-icon>
             </mat-form-field>
 
-            <mat-form-field class="registration-float-width" appearance="outline">
+            <mat-form-field appearance="outline" class="registration-float-width">
               <mat-label>E-Mail</mat-label>
-              <input matInput placeholder="E-Mail" name="email" [(ngModel)]="user.email" value="" email>
+              <input [(ngModel)]="user.email" email matInput name="email" placeholder="E-Mail" value="">
               <mat-icon matSuffix>mail</mat-icon>
             </mat-form-field>
 
-            <label class="registration-label-divider">Login-Daten</label>
-
-            <mat-form-field class="registration-full-width" appearance="outline">
+            <div>
+              <button [disabled]="!isAdressFormFilledOut()" mat-raised-button matStepperNext>Next</button>
+            </div>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>Login-Daten setzen</ng-template>
+            <mat-form-field appearance="outline" class="registration-full-width">
               <mat-label>Benutzername</mat-label>
-              <input matInput placeholder="UserName" name="userName" [(ngModel)]="user.loginName" value="">
+              <input [(ngModel)]="user.loginName" matInput name="userName" placeholder="UserName" value="">
               <mat-icon matSuffix>person</mat-icon>
             </mat-form-field>
 
-            <mat-form-field class="registration-float-width" appearance="outline">
+            <mat-form-field appearance="outline" class="registration-float-width">
               <mat-label>Passwort</mat-label>
-              <input matInput type="password" name="password" [(ngModel)]="user.password" placeholder="Passwort" value = "">
+              <input [(ngModel)]="user.password" matInput name="password" placeholder="Passwort" type="password"
+                     value="">
               <mat-icon matSuffix>lock</mat-icon>
             </mat-form-field>
 
-            <mat-form-field class="registration-float-width" appearance="outline">
+            <mat-form-field appearance="outline" class="registration-float-width">
               <mat-label>Passwort bestätigen</mat-label>
-              <input matInput type="password" name="passwordConfirmation"[(ngModel)]="user.passwordConfirmation" placeholder="Passwort bestätigen" value = "">
+              <input [(ngModel)]="user.passwordConfirmation" matInput name="passwordConfirmation" placeholder="Passwort bestätigen"
+                     type="password" value="">
               <mat-icon matSuffix>lock</mat-icon>
             </mat-form-field>
 
-            <mat-progress-bar class="registration-full-width" mode="determinate" [value]="getSecurityLevelPassword()/4*100" [color]="getProgressBarColor(getSecurityLevelPassword())"></mat-progress-bar>
-
+            <mat-progress-bar [color]="getProgressBarColor(getSecurityLevelPassword())" [value]="getSecurityLevelPassword()/4*100"
+                              class="registration-full-width"
+                              mode="determinate"></mat-progress-bar>
             <div *ngIf="isNoFieldEmpty()">
               <mat-error *ngIf="!isPasswordConfirmationValid()">Die Passwörter müssen übereinstimmen.</mat-error>
-              <mat-error *ngIf="getSecurityLevelPassword()<=1">Die Passwörter müssen mindestens 6 Zeichen lang sein und Großbuchstaben, sowie Sonderzeichen enthalten. Dein Vorname, Nachname oder Login-Name darf im Passwort nicht vorkommen.</mat-error>
+              <mat-error *ngIf="getSecurityLevelPassword()<=1">Die Passwörter müssen mindestens 6 Zeichen lang sein und
+                Großbuchstaben, sowie Sonderzeichen enthalten. Dein Vorname, Nachname oder Login-Name darf im Passwort
+                nicht vorkommen.
+              </mat-error>
             </div>
 
             <mat-error *ngIf="checkLogin == false">
-              LogIn name already exists!<br />
-              <img style="margin-top: 1em; height:20em; width: 20em" src="https://media3.giphy.com/media/kyHUOat3LQkXS/giphy.gif?cid=790b76115cf0f93764444e314171a3f9&rid=giphy.gif" />
+              LogIn name already exists!<br/>
+              <img src="https://media3.giphy.com/media/kyHUOat3LQkXS/giphy.gif?cid=790b76115cf0f93764444e314171a3f9&rid=giphy.gif"
+                   style="margin-top: 1em; height:20em; width: 20em"/>
             </mat-error>
 
-            <re-captcha class="registration-captcha" [(ngModel)]="formModel.captcha" name="captcha" required siteKey="6LdAf6YUAAAAAJGjRhexi2Tk337uzPhvW9IhOAi-" #captchaControl="ngModel"></re-captcha>
+            <re-captcha #captchaControl="ngModel" [(ngModel)]="formModel.captcha" class="registration-captcha" name="captcha"
+                        required siteKey="6LdAf6YUAAAAAJGjRhexi2Tk337uzPhvW9IhOAi-"></re-captcha>
 
             <div *ngIf="isNoFieldEmpty()">
               <mat-error *ngIf="captchaControl.valid || captchaControl.pristine">Captcha must be solved</mat-error>
@@ -95,8 +107,13 @@
 
             <mat-error *ngIf="!isNoFieldEmpty()">The form must be filled out</mat-error>
 
-            <button mat-raised-button [disabled]="getSecurityLevelPassword() <= 3 || !isPasswordConfirmationValid() ||!isNoFieldEmpty() || captchaControl.valid" (click)="registration()">Registrieren</button>
-          </mat-card-content>
-      </mat-card>
-    </form>
+            <button (click)="registration()"
+                    [disabled]="getSecurityLevelPassword() <= 3 || !isPasswordConfirmationValid() ||!isNoFieldEmpty() || !captchaControl.valid"
+                    mat-raised-button>Registrieren
+            </button>
+          </mat-step>
+        </mat-horizontal-stepper>
+      </mat-card-content>
+    </mat-card>
+  </form>
 </div>

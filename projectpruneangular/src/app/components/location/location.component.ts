@@ -28,6 +28,7 @@ export class LocationComponent implements OnInit, OnDestroy {
   private friendsEnabledList = new UserDataDTO();
   private markers: Array<google.maps.Marker> = [];
   private pPic = 1;
+  private profilePicMap = new Map();
 
   successMessageSetLocation = false;
 
@@ -233,12 +234,19 @@ export class LocationComponent implements OnInit, OnDestroy {
 
   getProfilePicture(element: any) {
     // tslint:disable-next-line:triple-equals
-    console.log("get pic");
-    if ((this.pPic % 2) === 0) {
-      return 'https://randomuser.me/api/portraits/men/' + this.pPic + '.jpg';
-    } else {
-      return 'https://randomuser.me/api/portraits/women/' + this.pPic + '.jpg';
+    if (this.profilePicMap.has(element)) {
+      return this.profilePicMap.get(element);
     }
+
+    let url = '';
+    this.pPic++;
+    if ((this.pPic % 2) === 0) {
+      url = 'https://randomuser.me/api/portraits/men/' + this.pPic + '.jpg';
+    } else {
+      url = 'https://randomuser.me/api/portraits/women/' + this.pPic + '.jpg';
+    }
+
+    this.profilePicMap.set(element, url);
   }
 }
 

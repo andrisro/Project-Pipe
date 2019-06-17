@@ -10,13 +10,13 @@ import {RegLoginWrapperComponent} from "./components/regloginwrapper/reg-login-w
 
 
 const routes: Routes = [
-  {path: 'login', component: LoginComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'location', component: LocationComponent},
   {path: 'init', component: InitComponent},
   {path: 'logout', component: LogoutComponent},
   {path: '', component: LoginComponent},
-  {path: 'registration', component: RegistrationComponent},
+  {path: 'registration', component: RegLoginWrapperComponent},
+  {path: 'login', component: RegLoginWrapperComponent},
   {path: 'wrapper', component: RegLoginWrapperComponent}
 ];
 

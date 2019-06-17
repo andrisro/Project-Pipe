@@ -25,3 +25,16 @@ mat-grid-tile > * {
 .example-container > * {
   width: 100%;
 }
+
+.profile-card {
+  margin-top: 2em;
+}
+
+.profile-card img {
+  max-width: 150px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  border-radius: 50%;
+}

@@ -15,7 +15,7 @@ import {
   MatCheckboxModule,
   MatExpansionModule,
   MatNativeDateModule,
-  MatProgressBarModule,
+  MatProgressBarModule, MatStepperModule,
   MatTabsModule
 } from '@angular/material';
 import {ProfileComponent} from './components/profile/profile.component';
@@ -53,7 +53,9 @@ import {RegLoginWrapperComponent} from './components/regloginwrapper/reg-login-w
     MatProgressBarModule,
     MatCheckboxModule,
     MatTabsModule,
-    MatCardModule
+    MatCardModule,
+    MatStepperModule,
+    ReactiveFormsModule
   ],
   providers: [
     CookieService

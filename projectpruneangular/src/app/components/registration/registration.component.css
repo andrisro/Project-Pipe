@@ -20,6 +20,13 @@
   font-size: 20px;
 }
 
+mat-error {
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 16px;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
 .registration-captcha {
   width: 100%;
   display: block;
@@ -28,7 +35,7 @@
 }
 
 .main-div{
-  margin-top: 5em;
+  margin-top: 2em;
   display: flex;
   justify-content: center;
   align-items: center;

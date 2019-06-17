@@ -41,6 +41,10 @@ mat-form-field {
   height: auto;
 }
 
+.mat-cell img {
+  border-radius: 50%;
+}
+
 .mat-cell {
   padding: 8px 8px 8px 0;
 }

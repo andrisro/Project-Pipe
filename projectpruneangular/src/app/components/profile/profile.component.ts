@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private loginActionFinished: Subscription;
   private userDataActionFinished: Subscription;
   public userData: UserListDTO;
+  private profileUrl = '';
 
   constructor(private apiService: ApiService, private subjectService: SubjectService) {
   }
@@ -43,5 +44,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.loginActionFinished.unsubscribe();
     this.userDataActionFinished.unsubscribe();
+  }
+
+  getProfileUrl() {
+    if (this.profileUrl.length <= 1) {
+      this.profileUrl = 'https://randomuser.me/api/portraits/men/' + this.getRandomInt(20) + '.jpg';
+    }
+
+    return this.profileUrl;
+  }
+
+  getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
   }
 }
