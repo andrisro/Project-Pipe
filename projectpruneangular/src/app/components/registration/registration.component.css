@@ -12,8 +12,12 @@
 
 .registration-label-divider {
   width: 100%;
+  margin-top: 1em;
   margin-bottom: 1em;
   display: block;
+
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 20px;
 }
 
 .registration-captcha {
@@ -28,4 +32,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.registration-card-dividers {
+  margin-top: 2em;
+  padding-bottom: 2em;
 }
