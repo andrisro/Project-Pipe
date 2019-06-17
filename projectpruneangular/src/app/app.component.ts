@@ -27,7 +27,7 @@ export class AppComponent {
   }
 
   constructor() {
-    this.timeLeft = 0;
+    this.timeLeft = 2;
     this.startTimer();
   }
 }
