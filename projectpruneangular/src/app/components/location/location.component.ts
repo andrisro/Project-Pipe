@@ -31,6 +31,7 @@ export class LocationComponent implements OnInit, OnDestroy {
   private profilePicMap = new Map();
 
   successMessageSetLocation = false;
+  zeroResultsMessage = false;
 
   @ViewChild('gmap') gmapElement: any;
   map: google.maps.Map;
@@ -181,12 +182,18 @@ export class LocationComponent implements OnInit, OnDestroy {
         this.apiService.setStandort(setStandort);
         this.reloadMap();
         this.successMessageSetLocation = true;
+        this.zeroResultsMessage = false;
+      } else if(status === google.maps.GeocoderStatus.ZERO_RESULTS) {
+        console.log("zero");
+        this.zeroResultsMessage = true;
+        this.successMessageSetLocation = false;
       }
     });
   }
 
   resetSetLocationBool() {
     this.successMessageSetLocation = false;
+    this.zeroResultsMessage = false;
   }
 
   public filterFriendsTable = (value: string) => {

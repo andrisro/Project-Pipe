@@ -24,6 +24,7 @@
         <button mat-raised-button (click)="setStandortByFormData()">Standort setzen</button>
 
         <p class="location-form-width" *ngIf="successMessageSetLocation" style="color: green">Standort erfolgreich gespeichert.</p>
+        <p class="location-form-width" *ngIf="zeroResultsMessage" style="color: red">Diese Adresse gibt es leider nicht :(.</p>
       </form>
     </mat-panel-description>
   </mat-expansion-panel>
