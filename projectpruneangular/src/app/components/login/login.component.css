@@ -11,3 +11,10 @@
 .login-full-width {
   width: 100%;
 }
+
+.main-div{
+  margin-top: 5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

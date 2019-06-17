@@ -11,6 +11,7 @@ import {RegistrationComponent} from './components/registration/registration.comp
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HeaderComponent} from './components/header/header.component';
 import {
+  MatCardModule,
   MatCheckboxModule,
   MatExpansionModule,
   MatNativeDateModule,
@@ -24,6 +25,7 @@ import {InitComponent} from './components/init/init.component';
 import {LogoutComponent} from './components/logout/logout.component';
 import { RecaptchaModule} from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
+import {RegLoginWrapperComponent} from './components/regloginwrapper/reg-login-wrapper.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
     RegistrationComponent,
     InitComponent,
     InitComponent,
-    LogoutComponent
+    LogoutComponent,
+    RegLoginWrapperComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,8 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
     RecaptchaFormsModule,
     MatProgressBarModule,
     MatCheckboxModule,
-    MatTabsModule
+    MatTabsModule,
+    MatCardModule
   ],
   providers: [
     CookieService

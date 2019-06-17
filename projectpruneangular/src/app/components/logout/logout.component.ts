@@ -6,7 +6,7 @@ import {UserSessionDTO} from '../../common/dto/UserSessionDTO';
 
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-logout',
   templateUrl: './logout.component.html',
   styleUrls: ['./logout.component.css']
 })
