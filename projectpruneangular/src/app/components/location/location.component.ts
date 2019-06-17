@@ -22,7 +22,7 @@ export class LocationComponent implements OnInit, OnDestroy {
   private getUserStandortActionFinished: Subscription;
 
   private userSession: UserSessionDTO;
-  private locationFormData: LocationFormData;
+  locationFormData: LocationFormData;
   private geolocationPosition: Position;
   public dataSource = new MatTableDataSource<UserListDTO>();
   private friendsEnabledList = new UserDataDTO();
