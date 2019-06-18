@@ -50,12 +50,13 @@
 
             <mat-form-field appearance="outline" class="registration-float-width">
               <mat-label>E-Mail</mat-label>
-              <input [(ngModel)]="user.email" email matInput name="email" placeholder="E-Mail" value="">
+              <input matInput placeholder="E-Mail" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)]="user.email" value="" email ngModel #emailref="ngModel">
+              <mat-error *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)">Bitte eine korrekte Email eintragen</mat-error>
               <mat-icon matSuffix>mail</mat-icon>
             </mat-form-field>
 
             <div>
-              <button [disabled]="!isAdressFormFilledOut()" mat-raised-button matStepperNext>Next</button>
+              <button [disabled]="!isAdressFormFilledOut() || emailref.invalid" mat-raised-button matStepperNext>Next</button>
             </div>
           </mat-step>
           <mat-step>
@@ -100,12 +101,10 @@
             <re-captcha #captchaControl="ngModel" [(ngModel)]="formModel.captcha" class="registration-captcha" name="captcha"
                         required siteKey="6LdAf6YUAAAAAJGjRhexi2Tk337uzPhvW9IhOAi-"></re-captcha>
 
-            <div *ngIf="isNoFieldEmpty()">
-              <mat-error *ngIf="captchaControl.valid || captchaControl.pristine">Captcha must be solved</mat-error>
-              <mat-error [hidden]="!captchaControl.valid" class="success">Captcha is invalid</mat-error>
+            <div *ngIf="captchaControl.touched">
+              <mat-error *ngIf="!captchaControl.valid || captchaControl.pristine">Captcha must be solved</mat-error>
+              <mat-error *ngIf="!captchaControl.valid" class="success">Captcha is invalid</mat-error>
             </div>
-
-            <mat-error *ngIf="!isNoFieldEmpty()">The form must be filled out</mat-error>
 
             <button (click)="registration()"
                     [disabled]="getSecurityLevelPassword() <= 3 || !isPasswordConfirmationValid() ||!isNoFieldEmpty() || !captchaControl.valid"
