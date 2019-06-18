@@ -69,6 +69,7 @@ export class ApiService {
     const url = this.apiPath + this.getStandortPath + '?login=' + userSession.userName + '&session=' + userSession.sessionID + '&id=' + userName;
 
     const req = this.http.get<GetStandortDTO>(url).subscribe((data) => {
+      data.userName = userName;
       this.subjectService.userStandortSubject.next(data);
     });
   }

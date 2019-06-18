@@ -123,7 +123,8 @@ export class LocationComponent implements OnInit, OnDestroy {
         lng: data.laengengrad
       };
 
-      this.setPositionWithoutInfo(pos);
+      // this.setPositionWithoutInfo(pos);
+      this.setPositionUser(pos, data.userName);
       console.log('got standort ' + data);
     });
   }
@@ -139,6 +140,35 @@ export class LocationComponent implements OnInit, OnDestroy {
 
     console.log('add marker');
     this.map.setCenter(pos);
+  }
+
+  private setPositionUser(pos: { lng: number; lat: number }, userName: string) {
+    let foundUserElement = null;
+
+    this.dataSource.data.forEach(user => {
+      if (user.loginName === userName) {
+        foundUserElement = user;
+      }
+    });
+
+    let icon = '';
+    icon = this.getProfilePicture(foundUserElement);
+
+    var iconScaled = {
+      url: icon, // url
+      scaledSize: new google.maps.Size(50, 50), // scaled size
+      origin: new google.maps.Point(0,0), // origin
+      anchor: new google.maps.Point(0, 0) // anchor
+    }
+
+    const marker = new google.maps.Marker( {
+      position: pos,
+      map: this.map,
+      title: userName + 's Standort',
+      icon: iconScaled
+    });
+
+    this.markers.push(marker);
   }
 
   setPositionWithoutInfo(pos) {
@@ -163,7 +193,7 @@ export class LocationComponent implements OnInit, OnDestroy {
     console.log('address ' + address);
 
     geocoder.geocode({'address': address}, (results, status) => {
-      if (status == google.maps.GeocoderStatus.OK) {
+      if (status === google.maps.GeocoderStatus.OK) {
         console.log('ok');
 
         const setStandort = new SetStandortDTO();
@@ -183,8 +213,8 @@ export class LocationComponent implements OnInit, OnDestroy {
         this.reloadMap();
         this.successMessageSetLocation = true;
         this.zeroResultsMessage = false;
-      } else if(status === google.maps.GeocoderStatus.ZERO_RESULTS) {
-        console.log("zero");
+      } else if (status === google.maps.GeocoderStatus.ZERO_RESULTS) {
+        console.log('zero');
         this.zeroResultsMessage = true;
         this.successMessageSetLocation = false;
       }
@@ -255,6 +285,7 @@ export class LocationComponent implements OnInit, OnDestroy {
 
     this.profilePicMap.set(element, url);
   }
+
 }
 
 export class LocationFormData {
