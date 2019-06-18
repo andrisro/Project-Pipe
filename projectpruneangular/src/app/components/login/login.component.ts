@@ -5,9 +5,8 @@ import {MatButton} from '@angular/material';
 import {UserLoginDTO} from '../../common/dto/UserLoginDTO';
 import {UserPasswordDTO} from '../../common/dto/UserPasswordDTO';
 import {SubjectService} from '../../common/services/subject.service';
-import {Subscription} from 'rxjs';
+import {from, generate, Subscription} from 'rxjs';
 import {UserSessionDTO} from '../../common/dto/UserSessionDTO';
-
 
 @Component({
   selector: 'app-login',
@@ -61,6 +60,7 @@ export class LoginComponent implements OnInit, OnDestroy, OnChanges {
     const userLoginDto = new UserLoginDTO();
     userLoginDto.loginName = this.user.loginName;
     userLoginDto.passwort = new UserPasswordDTO();
+
     userLoginDto.passwort.passwort = this.user.password;
 
     console.log('Log: ');

@@ -6,7 +6,7 @@ import {LocationComponent} from './components/location/location.component';
 import {RegistrationComponent} from './components/registration/registration.component';
 import {InitComponent} from './components/init/init.component';
 import {LogoutComponent} from './components/logout/logout.component';
-import {RegLoginWrapperComponent} from "./components/regloginwrapper/reg-login-wrapper.component";
+import {RegLoginWrapperComponent} from './components/regloginwrapper/reg-login-wrapper.component';
 
 
 const routes: Routes = [
@@ -14,7 +14,7 @@ const routes: Routes = [
   {path: 'location', component: LocationComponent},
   {path: 'init', component: InitComponent},
   {path: 'logout', component: LogoutComponent},
-  {path: '', component: LoginComponent},
+  {path: '', component: RegLoginWrapperComponent},
   {path: 'registration', component: RegLoginWrapperComponent},
   {path: 'login', component: RegLoginWrapperComponent},
   {path: 'wrapper', component: RegLoginWrapperComponent}
