@@ -32,8 +32,10 @@
   </mat-form-field>
 
   <mat-form-field class="registration-float-width">
-    <input matInput placeholder="E-Mail" name="email" [(ngModel)]="user.email" value="" email>
+    <input matInput placeholder="E-Mail" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)]="user.email" value="" email ngModel #emailref="ngModel">
+        <mat-error *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)">Bitte eine korrekte Email eintragen du Nudel</mat-error>
   </mat-form-field>
+
 
   <label class="registration-label-divider">Login-Daten</label>
 
@@ -65,10 +67,10 @@
 
   <div *ngIf="isNoFieldEmpty()">
     <mat-error *ngIf="captchaControl.valid || captchaControl.pristine">Captcha must be solved</mat-error>
-    <mat-error [hidden]="!captchaControl.valid" class="success">Captcha is invalid</mat-error>
+    <mat-error [hidden]="captchaControl.valid" class="success">Captcha is invalid</mat-error>
   </div>
 
   <mat-error *ngIf="!isNoFieldEmpty()">The form must be filled out</mat-error>
 
-  <button mat-raised-button [disabled]="getSecurityLevelPassword() <= 3 || !isPasswordConfirmationValid() ||!isNoFieldEmpty() || captchaControl.valid" (click)="registration()">Registrieren</button>
+  <button mat-raised-button [disabled]="getSecurityLevelPassword() <= 3 || !isPasswordConfirmationValid() ||!isNoFieldEmpty() || !captchaControl.valid" (click)="registration()">Registrieren</button>
 </form>
