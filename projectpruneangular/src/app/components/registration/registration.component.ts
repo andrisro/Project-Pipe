@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ApiService} from '../../common/services/api.service';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonToggleModule} from '@angular/material';
-import {UserLoginDTO} from '../../common/dto/UserLoginDTO';
 import {UserPasswordDTO} from '../../common/dto/UserPasswordDTO';
 import {UserRegistrationDTO} from '../../common/dto/UserRegistrationDTO';
 import {UserRegistrationEmailDTO} from '../../common/dto/UserRegistrationEmailDTO';
@@ -72,6 +71,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     console.log('Log: ');
     console.log(JSON.stringify(userRegistrationDto));
     this.apiService.register(userRegistrationDto);
+
   }
 
   isPasswordConfirmationValid() {

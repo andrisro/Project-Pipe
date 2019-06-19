@@ -106,7 +106,7 @@
               <mat-error *ngIf="!captchaControl.valid" class="success">Captcha is invalid</mat-error>
             </div>
 
-            <button (click)="registration()"
+            <button (click)="registration()" routerLink="/login"
                     [disabled]="getSecurityLevelPassword() <= 3 || !isPasswordConfirmationValid() ||!isNoFieldEmpty() || !captchaControl.valid"
                     mat-raised-button>Registrieren
             </button>
