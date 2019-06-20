@@ -8,6 +8,7 @@ import {UserRegistrationEmailDTO} from '../../common/dto/UserRegistrationEmailDT
 import {Subscription} from 'rxjs';
 import {SubjectService} from '../../common/services/subject.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UserLoginDTO} from '../../common/dto/UserLoginDTO';
 
 export interface FormModel {
   captcha?: string;
@@ -24,7 +25,11 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   public formModel: FormModel = {};
   private checkLoginNameSubscription: Subscription;
   checkLogin = true;
-
+  public userRegistration: UserRegistrationDTO;
+  private registrationSubjectSubscription: Subscription;
+  loginFinished: boolean = false;
+  failureRegistration: boolean = false;
+  private loginFinishedSubject: Subscription;
   constructor(private apiService: ApiService,
               private subjectService: SubjectService) {
     this.user = new User();
@@ -32,11 +37,17 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscribeCheckLoginName();
+    this.subscribeRegistrationSuccess();
+    this.subscribeLoginFinished();
     this.checkLogin = true;
+
+    this.userRegistration.email = new UserRegistrationEmailDTO();
+    this.userRegistration.passwort = new UserPasswordDTO();
   }
 
   ngOnDestroy() {
     this.checkLoginNameSubscription.unsubscribe();
+    this.registrationSubjectSubscription.unsubscribe();
   }
 
   testCall() {
@@ -45,33 +56,51 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
   subscribeCheckLoginName() {
     this.checkLoginNameSubscription = this.subjectService.checkLoginNameSubject.subscribe((data) => {
-      console.log('hab die daten hier ' + JSON.stringify(data));
-      this.checkLogin = data.ergebnis;
+        console.log('hab die daten hier ' + JSON.stringify(data));
+        this.checkLogin = data.ergebnis;
+
+        if (this.checkLogin) {
+          this.apiService.register(this.userRegistration);
+        }
       }
     );
   }
 
-  registration() {
-    const userRegistrationDto = new UserRegistrationDTO();
-    userRegistrationDto.loginName = this.user.loginName;
-    userRegistrationDto.passwort = new UserPasswordDTO();
-    userRegistrationDto.passwort.passwort = this.user.password;
-    userRegistrationDto.nachname = this.user.lastName;
-    userRegistrationDto.vorname = this.user.firstName;
-    userRegistrationDto.strasse = this.user.street;
-    userRegistrationDto.plz = this.user.zip;
-    userRegistrationDto.ort = this.user.city;
-    userRegistrationDto.land = this.user.country;
-    userRegistrationDto.telefon = this.user.telephone;
-    userRegistrationDto.email = new UserRegistrationEmailDTO();
-    userRegistrationDto.email.adresse = this.user.email;
+  subscribeRegistrationSuccess() {
+    this.registrationSubjectSubscription = this.subjectService.userRegisteredSubject.subscribe((data) => {
+      if(data.ergebnis === true) {
+        const userLoginDto = new UserLoginDTO();
+        userLoginDto.loginName = this.userRegistration.loginName;
+        userLoginDto.passwort = this.userRegistration.passwort;
 
-    this.apiService.checkLoginName(userRegistrationDto.loginName);
+        this.apiService.login(userLoginDto);
+
+      } else {
+        this.failureRegistration = true;
+      }
+        console.log('response ' +data);
+    });
+  }
+
+  registration() {
+    this.userRegistration = new UserRegistrationDTO();
+    this.userRegistration.loginName = this.user.loginName;
+    this.userRegistration.passwort = new UserPasswordDTO();
+    this.userRegistration.passwort.passwort = this.user.password;
+    this.userRegistration.nachname = this.user.lastName;
+    this.userRegistration.vorname = this.user.firstName;
+    this.userRegistration.strasse = this.user.street;
+    this.userRegistration.plz = this.user.zip;
+    this.userRegistration.ort = this.user.city;
+    this.userRegistration.land = this.user.country;
+    this.userRegistration.telefon = this.user.telephone;
+    this.userRegistration.email = new UserRegistrationEmailDTO();
+    this.userRegistration.email.adresse = this.user.email;
+
+    this.apiService.checkLoginName(this.userRegistration.loginName);
 
     console.log('Log: ');
-    console.log(JSON.stringify(userRegistrationDto));
-    this.apiService.register(userRegistrationDto);
-
+    console.log(JSON.stringify(this.userRegistration));
   }
 
   isPasswordConfirmationValid() {
@@ -151,6 +180,12 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
   isAdressFormFilledOut() {
     return ((this.user.city.length > 1) && (this.user.country.length > 1) && (this.user.email.length > 1) && (this.user.street.length > 1) && (this.user.telephone.length > 1) && (this.user.zip.length > 1));
+  }
+
+  private subscribeLoginFinished() {
+    this.loginFinishedSubject = this.subjectService.loginFinishedSubject.subscribe((data) => {
+      this.loginFinished = true;
+    });
   }
 }
 
