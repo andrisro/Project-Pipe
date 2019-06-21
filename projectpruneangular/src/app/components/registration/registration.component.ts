@@ -41,6 +41,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     this.subscribeLoginFinished();
     this.checkLogin = true;
 
+    this.userRegistration = new UserRegistrationDTO();
     this.userRegistration.email = new UserRegistrationEmailDTO();
     this.userRegistration.passwort = new UserPasswordDTO();
   }
